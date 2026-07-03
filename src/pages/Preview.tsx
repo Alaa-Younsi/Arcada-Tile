@@ -19,12 +19,12 @@ interface PlaceConfig {
 }
 
 const PLACES: PlaceConfig[] = [
-  { id: 'pool',       label: { en: 'Pool',        fr: 'Piscine',       ar: 'المسبح'       }, defaultImage: '/scenes/pool.png',       Icon: Waves           },
-  { id: 'livingroom', label: { en: 'Living Room',  fr: 'Salon',         ar: 'غرفة المعيشة' }, defaultImage: '/scenes/livingroom.png', Icon: Sofa            },
-  { id: 'bathroom',   label: { en: 'Bathroom',     fr: 'Salle de bain', ar: 'الحمام'       }, defaultImage: '/scenes/bathroom.png',   Icon: Bath            },
-  { id: 'shop',       label: { en: 'Shop',         fr: 'Boutique',      ar: 'متجر'         }, defaultImage: '/scenes/shop.png',       Icon: ShoppingBag     },
-  { id: 'kitchen',    label: { en: 'Kitchen',      fr: 'Cuisine',       ar: 'المطبخ'       }, defaultImage: '/scenes/kitchen.png',    Icon: UtensilsCrossed },
-  { id: 'restaurant', label: { en: 'Restaurant',   fr: 'Restaurant',    ar: 'مطعم'         }, defaultImage: '/scenes/restaurant.png', Icon: Utensils        },
+  { id: 'pool',       label: { en: 'Pool',        fr: 'Piscine',       ar: 'المسبح'       }, defaultImage: '/scenes/pool.jpg',       Icon: Waves           },
+  { id: 'livingroom', label: { en: 'Living Room',  fr: 'Salon',         ar: 'غرفة المعيشة' }, defaultImage: '/scenes/livingroom.jpg', Icon: Sofa            },
+  { id: 'bathroom',   label: { en: 'Bathroom',     fr: 'Salle de bain', ar: 'الحمام'       }, defaultImage: '/scenes/bathroom.jpg',   Icon: Bath            },
+  { id: 'shop',       label: { en: 'Shop',         fr: 'Boutique',      ar: 'متجر'         }, defaultImage: '/scenes/shop.jpg',       Icon: ShoppingBag     },
+  { id: 'kitchen',    label: { en: 'Kitchen',      fr: 'Cuisine',       ar: 'المطبخ'       }, defaultImage: '/scenes/kitchen.jpg',    Icon: UtensilsCrossed },
+  { id: 'restaurant', label: { en: 'Restaurant',   fr: 'Restaurant',    ar: 'مطعم'         }, defaultImage: '/scenes/restaurant.jpg', Icon: Utensils        },
 ];
 
 interface CombinationInfo {
@@ -85,7 +85,7 @@ const RAW: Array<{ place: PlaceId; sku: string }> = [
 const COMBINATIONS: CombinationInfo[] = RAW.flatMap(({ place, sku }) => {
   const info = SKU_LOOKUP[sku];
   if (!info) return [];
-  return [{ place, sku, image: `/previews/combinations/${place}-${sku}.png`, ...info }];
+  return [{ place, sku, image: `/previews/combinations/${place}-${sku}.jpg`, ...info }];
 });
 
 const fadeUp = {

@@ -45,7 +45,7 @@ export const CATEGORIES: CatalogueCategory[] = [
       fr: 'Carreaux en forme de piquet allongé avec des finitions émaillées artisanales.',
       ar: 'بلاط سيراميك بشكل لقطة مستطيلة بتشطيبات مزججة حرفية.',
     },
-    image: '/categories/Silos.png?v=2',
+    image: '/categories/Silos.jpg?v=3',
     shape: 'Picket · 10×30 cm',
   },
   {
@@ -56,7 +56,7 @@ export const CATEGORIES: CatalogueCategory[] = [
       fr: 'Carreaux feuille artisanaux avec textures en relief et finitions métalliques.',
       ar: 'بلاط على شكل ورقة بنقوش بارزة وتشطيبات معدنية.',
     },
-    image: '/categories/Atelier.png?v=2',
+    image: '/categories/Atelier.jpg?v=3',
     shape: 'Leaf · 10×30 cm',
   },
   {
@@ -67,7 +67,7 @@ export const CATEGORIES: CatalogueCategory[] = [
       fr: 'Carreaux rectangulaires de style métro avec un aspect vieilli fait main.',
       ar: 'بلاط مستطيل بأسلوب المترو بمظهر عتيق مصنوع يدويًا.',
     },
-    image: '/categories/Ducal.png?v=2',
+    image: '/categories/Ducal.jpg?v=3',
     shape: 'Subway · 10×30 cm',
   },
   {
@@ -78,7 +78,7 @@ export const CATEGORIES: CatalogueCategory[] = [
       fr: 'Carreaux feuille architecturaux inspirés des frondes de palmier.',
       ar: 'بلاط بشكل ورقة معمارية مستوحى من سعف النخيل.',
     },
-    image: '/categories/Leaf.png?v=2',
+    image: '/categories/Leaf.jpg?v=3',
     shape: 'Leaf · 15×30 cm',
   },
   {
@@ -89,7 +89,7 @@ export const CATEGORIES: CatalogueCategory[] = [
       fr: 'Carreaux hexagonaux allongés ludiques avec motifs décoratifs.',
       ar: 'بلاط سداسي مستطيل مرح بزخارف مميزة.',
     },
-    image: '/categories/Gonos.png?v=2',
+    image: '/categories/Gonos.jpg?v=3',
     shape: 'Hexagon · 15×30 cm',
   },
   {
@@ -100,7 +100,7 @@ export const CATEGORIES: CatalogueCategory[] = [
       fr: 'Carreaux marocains en écaille avec relief ornemental en saillie.',
       ar: 'بلاط مستوحى من الطابع المغربي بشكل صدفة مع نقوش بارزة.',
     },
-    image: '/categories/Chic.png?v=2',
+    image: '/categories/Chic.jpg?v=3',
     shape: 'Scallop · 20×20 cm',
   },
   {
@@ -111,7 +111,7 @@ export const CATEGORIES: CatalogueCategory[] = [
       fr: 'Carreaux peints à la main avec riches motifs floraux.',
       ar: 'بلاط تقليدي مطلي يدويًا بزخارف زهرية غنية.',
     },
-    image: '/categories/KRONFEL.png?v=2',
+    image: '/categories/KRONFEL.jpg?v=3',
     shape: 'Square · 20×20 cm',
   },
   {
@@ -122,7 +122,7 @@ export const CATEGORIES: CatalogueCategory[] = [
       fr: 'Carreaux de style andalou peints à la main avec motifs botaniques.',
       ar: 'بلاط بالأسلوب الأندلسي مرسوم يدويًا بزخارف نباتية.',
     },
-    image: '/categories/Casbah.png?v=2',
+    image: '/categories/Casbah.jpg?v=3',
     shape: 'Square · 20×20 cm',
   },
   {
@@ -133,7 +133,7 @@ export const CATEGORIES: CatalogueCategory[] = [
       fr: "Carreaux d'inspiration ottomane avec arabesques complexes.",
       ar: 'بلاط مستوحى من العثمانية بزخارف تدوير معقدة.',
     },
-    image: '/categories/Yasmine.png?v=2',
+    image: '/categories/Yasmine.jpg?v=3',
     shape: 'Square · 20×20 cm',
   },
   {
@@ -155,7 +155,7 @@ export const CATEGORIES: CatalogueCategory[] = [
       fr: "Carreaux d'inspiration mauresque avec entrelacs géométriques aux couleurs vives.",
       ar: 'بلاط مستوحى من الأندلس بأنماط هندسية متشابكة بألوان زاهية.',
     },
-    image: '/categories/Andalous.png?v=2',
+    image: '/categories/Andalous.jpg?v=3',
     shape: 'Square · 20×20 cm',
   },
   {
@@ -166,7 +166,7 @@ export const CATEGORIES: CatalogueCategory[] = [
       fr: "Carreaux peints à la main d'inspiration patrimoniale avec médaillons ornementaux.",
       ar: 'بلاط مطلي يدويًا بوحي من التراث بزخارف ميداليات مزخرفة.',
     },
-    image: '/categories/Azahra.png?v=2',
+    image: '/categories/Azahra.jpg?v=3',
     shape: 'Square · 20×20 cm',
   },
 ];

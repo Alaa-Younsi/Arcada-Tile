@@ -17,7 +17,7 @@ interface SEOHeadProps {
 
 const SITE_URL    = 'https://arcada.dz';
 const SITE_NAME   = 'ARCADA';
-const DEFAULT_IMG = '/image6.png';
+const DEFAULT_IMG = '/image6.jpg';
 
 const DEFAULT_TITLE = 'ARCADA — Carreaux Céramiques | Fabricant Algérien Exclusif';
 const DEFAULT_DESC  =

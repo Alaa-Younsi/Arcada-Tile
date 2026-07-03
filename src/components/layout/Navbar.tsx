@@ -160,7 +160,7 @@ export function Navbar() {
                 <div
                   className="relative overflow-hidden"
                   style={{
-                    backgroundImage: "url('/image6.png')",
+                    backgroundImage: "url('/image6.jpg')",
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                     minHeight: '300px',

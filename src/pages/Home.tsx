@@ -363,7 +363,7 @@ export default function Home() {
             className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-surface-warm"
           >
             <img
-              src="/about.png"
+              src="/about.jpg"
               alt="ARCADA showroom"
               className="w-full h-full object-cover"
               loading="lazy"
@@ -451,7 +451,7 @@ export default function Home() {
             transition={{ duration: 0.7, delay: 0.1 }}
             className="relative aspect-square overflow-hidden rounded-2xl hidden lg:block"
           >
-            <img src="/image6.png" alt="Carreaux céramiques ARCADA dans un espace intérieur" className="w-full h-full object-cover opacity-60" loading="lazy" decoding="async" />
+            <img src="/image6.jpg" alt="Carreaux céramiques ARCADA dans un espace intérieur" className="w-full h-full object-cover opacity-60" loading="lazy" decoding="async" />
             <div className="absolute inset-0 bg-gradient-to-br from-dark/60 to-transparent" />
           </motion.div>
         </div>
