@@ -73,9 +73,6 @@ export function Footer() {
               <a href={`tel:${t("contact.phone")}`} className="block font-sans text-sm text-white/50 hover:text-[#8B7355] transition-colors">
                 {t("contact.phone")}
               </a>
-              <a href={`mailto:${t("contact.email")}`} className="block font-sans text-sm text-white/50 hover:text-[#8B7355] transition-colors">
-                {t("contact.email")}
-              </a>
             </address>
           </div>
         </div>
