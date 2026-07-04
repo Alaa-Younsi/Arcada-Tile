@@ -79,6 +79,14 @@ export function Footer() {
 
         <div className="border-t border-white/10 pt-8 flex flex-col sm:flex-row items-center justify-between gap-2">
           <p className="font-sans text-xs text-white/30 tracking-wide">{t("footer.rights")}</p>
+          <a
+            href="https://alaayounsi.vercel.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-sans text-xs text-white/30 tracking-wide hover:text-[#8B7355] transition-colors"
+          >
+            website created by Alaa Younsi
+          </a>
           <p className="font-sans text-xs text-white/20 uppercase tracking-[0.2em]">
             Fait en Algérie
           </p>
