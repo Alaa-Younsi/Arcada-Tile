@@ -1,9 +1,10 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { Pause, Play } from 'lucide-react';
 import { SEOHead } from '@/components/seo/SEOHead';
+import { useHeroVideoSource } from '@/hooks/useHeroVideoSource';
 import { CATEGORIES, getFeaturedFlatVariants } from '@/data/catalogue';
 import type { Lang } from '@/types';
 
@@ -19,20 +20,10 @@ export default function Home() {
   const featured = getFeaturedFlatVariants();
   const videoRef = useRef<HTMLVideoElement>(null);
   const [playing, setPlaying] = useState(true);
-  // The hero video is attached only once the page has painted, so its download
-  // never competes with the poster image or the first render.
-  const [videoSrc, setVideoSrc] = useState<string>();
+  // Resolves to a source only on connections that can afford one, and only
+  // after the first paint. Undefined means this visitor keeps the poster.
+  const videoSrc = useHeroVideoSource();
   const [videoReady, setVideoReady] = useState(false);
-
-  useEffect(() => {
-    const start = () => setVideoSrc('/background.mp4');
-    if (typeof window.requestIdleCallback === 'function') {
-      const id = window.requestIdleCallback(start, { timeout: 2000 });
-      return () => window.cancelIdleCallback(id);
-    }
-    const id = window.setTimeout(start, 400);
-    return () => window.clearTimeout(id);
-  }, []);
 
   const togglePlay = () => {
     if (!videoRef.current) return;
@@ -53,20 +44,22 @@ export default function Home() {
 
       {/* ─── HERO ──────────────────────────────────────────────────── */}
       <section className="relative h-screen min-h-[600px] overflow-hidden">
-        <video
-          ref={videoRef}
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="none"
-          src={videoSrc}
-          onCanPlay={() => setVideoReady(true)}
-          onError={(e) => { (e.target as HTMLVideoElement).style.display = 'none'; }}
-          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
-            videoReady ? 'opacity-100' : 'opacity-0'
-          }`}
-        />
+        {videoSrc && (
+          <video
+            ref={videoRef}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="none"
+            src={videoSrc}
+            onCanPlay={() => setVideoReady(true)}
+            onError={(e) => { (e.target as HTMLVideoElement).style.display = 'none'; }}
+            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
+              videoReady ? 'opacity-100' : 'opacity-0'
+            }`}
+          />
+        )}
         {/* Painted immediately (preloaded in index.html) — carries the hero until
             the video is decodable, and stays put if the video fails or is absent */}
         <img
@@ -81,14 +74,16 @@ export default function Home() {
         />
         <div className="absolute inset-0 bg-gradient-to-r from-dark/70 via-dark/40 to-dark/10" />
 
-        {/* Pause / Resume button */}
-        <button
-          onClick={togglePlay}
-          aria-label={playing ? 'Pause' : 'Play'}
-          className="absolute bottom-8 right-8 z-10 flex items-center justify-center w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 text-white hover:bg-white/30 transition-colors duration-200"
-        >
-          {playing ? <Pause size={14} /> : <Play size={14} />}
-        </button>
+        {/* Pause / Resume — only meaningful once there is a video to control */}
+        {videoReady && (
+          <button
+            onClick={togglePlay}
+            aria-label={playing ? 'Pause' : 'Play'}
+            className="absolute bottom-8 right-8 z-10 flex items-center justify-center w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 text-white hover:bg-white/30 transition-colors duration-200"
+          >
+            {playing ? <Pause size={14} /> : <Play size={14} />}
+          </button>
+        )}
 
         <div className="relative h-full flex flex-col justify-end px-6 lg:px-16 pb-20 max-w-screen-2xl mx-auto">
           <motion.div
