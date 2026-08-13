@@ -1,4 +1,4 @@
-﻿// src/data/catalogue.ts
+// src/data/catalogue.ts
 // To add a new product: add an entry to PRODUCTS
 // To add a new color variant: add to its product's variants array
 // To add a new category: add to CATEGORIES and use the slug in a product
@@ -11,8 +11,8 @@ export interface ColorVariant {
   id: string;           // unique slug e.g. 'silos-terracota'
   name: Record<Lang, string>;
   hex: string;          // representative swatch color
-  image: string;        // path to product image e.g. '/products/ARC-SIL-001.jpg?v=2'
-  // Optional per-room override. Falls back to /previews/{roomId}/{id}.jpg
+  image: string;        // path to product image e.g. '/products/ARC-SIL-001.webp'
+  // Optional per-room override. Falls back to /previews/{roomId}/{id}.webp
   roomImages?: Partial<Record<RoomId, string>>;
 }
 
@@ -45,7 +45,7 @@ export const CATEGORIES: CatalogueCategory[] = [
       fr: 'Carreaux en forme de piquet allongé avec des finitions émaillées artisanales.',
       ar: 'بلاط سيراميك بشكل لقطة مستطيلة بتشطيبات مزججة حرفية.',
     },
-    image: '/categories/Silos.jpg?v=3',
+    image: '/categories/Silos.webp',
     shape: 'Picket · 10×30 cm',
   },
   {
@@ -56,7 +56,7 @@ export const CATEGORIES: CatalogueCategory[] = [
       fr: 'Carreaux feuille artisanaux avec textures en relief et finitions métalliques.',
       ar: 'بلاط على شكل ورقة بنقوش بارزة وتشطيبات معدنية.',
     },
-    image: '/categories/Atelier.jpg?v=3',
+    image: '/categories/Atelier.webp',
     shape: 'Leaf · 10×30 cm',
   },
   {
@@ -67,7 +67,7 @@ export const CATEGORIES: CatalogueCategory[] = [
       fr: 'Carreaux rectangulaires de style métro avec un aspect vieilli fait main.',
       ar: 'بلاط مستطيل بأسلوب المترو بمظهر عتيق مصنوع يدويًا.',
     },
-    image: '/categories/Ducal.jpg?v=3',
+    image: '/categories/Ducal.webp',
     shape: 'Subway · 10×30 cm',
   },
   {
@@ -78,7 +78,7 @@ export const CATEGORIES: CatalogueCategory[] = [
       fr: 'Carreaux feuille architecturaux inspirés des frondes de palmier.',
       ar: 'بلاط بشكل ورقة معمارية مستوحى من سعف النخيل.',
     },
-    image: '/categories/Leaf.jpg?v=3',
+    image: '/categories/Leaf.webp',
     shape: 'Leaf · 15×30 cm',
   },
   {
@@ -89,7 +89,7 @@ export const CATEGORIES: CatalogueCategory[] = [
       fr: 'Carreaux hexagonaux allongés ludiques avec motifs décoratifs.',
       ar: 'بلاط سداسي مستطيل مرح بزخارف مميزة.',
     },
-    image: '/categories/Gonos.jpg?v=3',
+    image: '/categories/Gonos.webp',
     shape: 'Hexagon · 15×30 cm',
   },
   {
@@ -100,7 +100,7 @@ export const CATEGORIES: CatalogueCategory[] = [
       fr: 'Carreaux marocains en écaille avec relief ornemental en saillie.',
       ar: 'بلاط مستوحى من الطابع المغربي بشكل صدفة مع نقوش بارزة.',
     },
-    image: '/categories/Chic.jpg?v=3',
+    image: '/categories/Chic.webp',
     shape: 'Scallop · 20×20 cm',
   },
   {
@@ -111,7 +111,7 @@ export const CATEGORIES: CatalogueCategory[] = [
       fr: 'Carreaux peints à la main avec riches motifs floraux.',
       ar: 'بلاط تقليدي مطلي يدويًا بزخارف زهرية غنية.',
     },
-    image: '/categories/KRONFEL.jpg?v=3',
+    image: '/categories/KRONFEL.webp',
     shape: 'Square · 20×20 cm',
   },
   {
@@ -122,7 +122,7 @@ export const CATEGORIES: CatalogueCategory[] = [
       fr: 'Carreaux de style andalou peints à la main avec motifs botaniques.',
       ar: 'بلاط بالأسلوب الأندلسي مرسوم يدويًا بزخارف نباتية.',
     },
-    image: '/categories/Casbah.jpg?v=3',
+    image: '/categories/Casbah.webp',
     shape: 'Square · 20×20 cm',
   },
   {
@@ -133,7 +133,7 @@ export const CATEGORIES: CatalogueCategory[] = [
       fr: "Carreaux d'inspiration ottomane avec arabesques complexes.",
       ar: 'بلاط مستوحى من العثمانية بزخارف تدوير معقدة.',
     },
-    image: '/categories/Yasmine.jpg?v=3',
+    image: '/categories/Yasmine.webp',
     shape: 'Square · 20×20 cm',
   },
   {
@@ -144,7 +144,7 @@ export const CATEGORIES: CatalogueCategory[] = [
       fr: 'Carreaux peints à la main avec délicats motifs floraux arabesques.',
       ar: 'بلاط مطلي يدويًا بزخارف عربية زهرية رقيقة.',
     },
-    image: '/categories/Narjes.jpg?v=2',
+    image: '/categories/Narjes.webp',
     shape: 'Square · 20×20 cm',
   },
   {
@@ -155,7 +155,7 @@ export const CATEGORIES: CatalogueCategory[] = [
       fr: "Carreaux d'inspiration mauresque avec entrelacs géométriques aux couleurs vives.",
       ar: 'بلاط مستوحى من الأندلس بأنماط هندسية متشابكة بألوان زاهية.',
     },
-    image: '/categories/Andalous.jpg?v=3',
+    image: '/categories/Andalous.webp',
     shape: 'Square · 20×20 cm',
   },
   {
@@ -166,7 +166,7 @@ export const CATEGORIES: CatalogueCategory[] = [
       fr: "Carreaux peints à la main d'inspiration patrimoniale avec médaillons ornementaux.",
       ar: 'بلاط مطلي يدويًا بوحي من التراث بزخارف ميداليات مزخرفة.',
     },
-    image: '/categories/Azahra.jpg?v=3',
+    image: '/categories/Azahra.webp',
     shape: 'Square · 20×20 cm',
   },
 ];
@@ -187,10 +187,10 @@ export const PRODUCTS: CatalogueProduct[] = [
     finish: 'Glazed',
     isFeatured: true,
     variants: [
-      { id: 'silos-terracota', name: { en: 'Terracota', fr: 'Terracota', ar: 'تيراكوتا' }, hex: '#C4703A', image: '/products/ARC-SIL-001.jpg?v=2' },
-      { id: 'silos-beige',     name: { en: 'Beige',     fr: 'Beige',     ar: 'بيج'       }, hex: '#D4BFA0', image: '/products/ARC-SIL-002.jpg?v=2' },
-      { id: 'silos-antracita', name: { en: 'Antracita', fr: 'Antracita', ar: 'أنتراسيتا' }, hex: '#3D3D3D', image: '/products/ARC-SIL-006.jpg?v=2' },
-      { id: 'silos-gris',      name: { en: 'Gris',      fr: 'Gris',      ar: 'رمادي'     }, hex: '#9B9B9B', image: '/products/ARC-SIL-007.jpg?v=2' },
+      { id: 'silos-terracota', name: { en: 'Terracota', fr: 'Terracota', ar: 'تيراكوتا' }, hex: '#C4703A', image: '/products/ARC-SIL-001.webp' },
+      { id: 'silos-beige',     name: { en: 'Beige',     fr: 'Beige',     ar: 'بيج'       }, hex: '#D4BFA0', image: '/products/ARC-SIL-002.webp' },
+      { id: 'silos-antracita', name: { en: 'Antracita', fr: 'Antracita', ar: 'أنتراسيتا' }, hex: '#3D3D3D', image: '/products/ARC-SIL-006.webp' },
+      { id: 'silos-gris',      name: { en: 'Gris',      fr: 'Gris',      ar: 'رمادي'     }, hex: '#9B9B9B', image: '/products/ARC-SIL-007.webp' },
     ],
   },
   {
@@ -207,18 +207,18 @@ export const PRODUCTS: CatalogueProduct[] = [
     finish: 'Hand-painted',
     isFeatured: true,
     variants: [
-      { id: 'silos-dec-natura-beige',    name: { en: 'Natura Beige',    fr: 'Natura Beige',    ar: 'ناتورا بيج'    }, hex: '#D4BFA0', image: '/products/ARC-SIL-003.jpg?v=2' },
-      { id: 'silos-dec-jamaica-beige',   name: { en: 'Jamaica Beige',   fr: 'Jamaica Beige',   ar: 'جامايكا بيج'   }, hex: '#C4703A', image: '/products/ARC-SIL-004.jpg?v=2' },
-      { id: 'silos-dec-celestina-beige', name: { en: 'Celestina Beige', fr: 'Celestina Beige', ar: 'سيليستينا بيج' }, hex: '#E8D5BC', image: '/products/ARC-SIL-005.jpg?v=2' },
-      { id: 'silos-dec-natura-gris',     name: { en: 'Natura Gris',     fr: 'Natura Gris',     ar: 'ناتورا رمادي'  }, hex: '#9B9B9B', image: '/products/ARC-SIL-008.jpg?v=2' },
-      { id: 'silos-dec-jamaica-gris',    name: { en: 'Jamaica Gris',    fr: 'Jamaica Gris',    ar: 'جامايكا رمادي' }, hex: '#7D7D7D', image: '/products/ARC-SIL-009.jpg?v=2' },
-      { id: 'silos-dec-celestina-gris',  name: { en: 'Celestina Gris',  fr: 'Celestina Gris',  ar: 'سيليستينا رمادي' }, hex: '#B0B0B0', image: '/products/ARC-SIL-010.jpg?v=2' },
-      { id: 'silos-dec-gold',            name: { en: 'Gold',            fr: 'Gold',            ar: 'ذهبي'          }, hex: '#C9A84C', image: '/products/ARC-SIL-011.jpg?v=2' },
-      { id: 'silos-dec-beige',           name: { en: 'Dec Beige',       fr: 'Dec Beige',       ar: 'ديك بيج'       }, hex: '#D4BFA0', image: '/products/ARC-SIL-012.jpg?v=2' },
-      { id: 'silos-dec-mix-beige',       name: { en: 'Mix Beige',       fr: 'Mix Beige',       ar: 'ميكس بيج'      }, hex: '#C8A882', image: '/products/ARC-SIL-013.jpg?v=2' },
-      { id: 'silos-dec-silver',          name: { en: 'Silver',          fr: 'Silver',          ar: 'فضي'           }, hex: '#A8A8A8', image: '/products/ARC-SIL-014.jpg?v=2' },
-      { id: 'silos-dec-gris',            name: { en: 'Dec Gris',        fr: 'Dec Gris',        ar: 'ديك رمادي'     }, hex: '#9B9B9B', image: '/products/ARC-SIL-015.jpg?v=2' },
-      { id: 'silos-dec-mix-gris',        name: { en: 'Mix Gris',        fr: 'Mix Gris',        ar: 'ميكس رمادي'    }, hex: '#808080', image: '/products/ARC-SIL-016.jpg?v=2' },
+      { id: 'silos-dec-natura-beige',    name: { en: 'Natura Beige',    fr: 'Natura Beige',    ar: 'ناتورا بيج'    }, hex: '#D4BFA0', image: '/products/ARC-SIL-003.webp' },
+      { id: 'silos-dec-jamaica-beige',   name: { en: 'Jamaica Beige',   fr: 'Jamaica Beige',   ar: 'جامايكا بيج'   }, hex: '#C4703A', image: '/products/ARC-SIL-004.webp' },
+      { id: 'silos-dec-celestina-beige', name: { en: 'Celestina Beige', fr: 'Celestina Beige', ar: 'سيليستينا بيج' }, hex: '#E8D5BC', image: '/products/ARC-SIL-005.webp' },
+      { id: 'silos-dec-natura-gris',     name: { en: 'Natura Gris',     fr: 'Natura Gris',     ar: 'ناتورا رمادي'  }, hex: '#9B9B9B', image: '/products/ARC-SIL-008.webp' },
+      { id: 'silos-dec-jamaica-gris',    name: { en: 'Jamaica Gris',    fr: 'Jamaica Gris',    ar: 'جامايكا رمادي' }, hex: '#7D7D7D', image: '/products/ARC-SIL-009.webp' },
+      { id: 'silos-dec-celestina-gris',  name: { en: 'Celestina Gris',  fr: 'Celestina Gris',  ar: 'سيليستينا رمادي' }, hex: '#B0B0B0', image: '/products/ARC-SIL-010.webp' },
+      { id: 'silos-dec-gold',            name: { en: 'Gold',            fr: 'Gold',            ar: 'ذهبي'          }, hex: '#C9A84C', image: '/products/ARC-SIL-011.webp' },
+      { id: 'silos-dec-beige',           name: { en: 'Dec Beige',       fr: 'Dec Beige',       ar: 'ديك بيج'       }, hex: '#D4BFA0', image: '/products/ARC-SIL-012.webp' },
+      { id: 'silos-dec-mix-beige',       name: { en: 'Mix Beige',       fr: 'Mix Beige',       ar: 'ميكس بيج'      }, hex: '#C8A882', image: '/products/ARC-SIL-013.webp' },
+      { id: 'silos-dec-silver',          name: { en: 'Silver',          fr: 'Silver',          ar: 'فضي'           }, hex: '#A8A8A8', image: '/products/ARC-SIL-014.webp' },
+      { id: 'silos-dec-gris',            name: { en: 'Dec Gris',        fr: 'Dec Gris',        ar: 'ديك رمادي'     }, hex: '#9B9B9B', image: '/products/ARC-SIL-015.webp' },
+      { id: 'silos-dec-mix-gris',        name: { en: 'Mix Gris',        fr: 'Mix Gris',        ar: 'ميكس رمادي'    }, hex: '#808080', image: '/products/ARC-SIL-016.webp' },
     ],
   },
 
@@ -237,16 +237,16 @@ export const PRODUCTS: CatalogueProduct[] = [
     finish: 'Multi-finish',
     isFeatured: true,
     variants: [
-      { id: 'atelier-pb-miel',          name: { en: 'Pb Miel',          fr: 'Pb Miel',          ar: 'Pb عسلي'          }, hex: '#C9A84C', image: '/products/ARC-ATL-001.jpg?v=2' },
-      { id: 'atelier-ec-blanc',         name: { en: 'EC Blanc',         fr: 'EC Blanc',         ar: 'EC أبيض'          }, hex: '#F5F5F0', image: '/products/ARC-ATL-002.jpg?v=2' },
-      { id: 'atelier-pb-vert',          name: { en: 'Pb Vert',          fr: 'Pb Vert',          ar: 'Pb أخضر'          }, hex: '#2D5A27', image: '/products/ARC-ATL-003.jpg?v=2' },
-      { id: 'atelier-pb-bleu',          name: { en: 'Pb Bleu',          fr: 'Pb Bleu',          ar: 'Pb أزرق'          }, hex: '#1A3A8F', image: '/products/ARC-ATL-004.jpg?v=2' },
-      { id: 'atelier-mtl-gold',         name: { en: 'Mtl Gold',         fr: 'Mtl Gold',         ar: 'معدني ذهبي'       }, hex: '#D4AF37', image: '/products/ARC-ATL-005.jpg?v=2' },
-      { id: 'atelier-mtl-rose-gold',    name: { en: 'Mtl Rose Gold',    fr: 'Mtl Rose Gold',    ar: 'معدني روز غولد'   }, hex: '#B5776B', image: '/products/ARC-ATL-006.jpg?v=2' },
-      { id: 'atelier-mtl-silver',       name: { en: 'Mtl Silver',       fr: 'Mtl Silver',       ar: 'معدني فضي'        }, hex: '#A8A8A8', image: '/products/ARC-ATL-007.jpg?v=2' },
-      { id: 'atelier-mtl-bleu-petrole', name: { en: 'Mtl Bleu Pétrole', fr: 'Mtl Bleu Pétrole', ar: 'معدني أزرق بترولي' }, hex: '#1B7A8C', image: '/products/ARC-ATL-008.jpg?v=2' },
-      { id: 'atelier-ird-rose',         name: { en: 'Ird Rose',         fr: 'Ird Rose',         ar: 'متقزح وردي'       }, hex: '#E8B4B8', image: '/products/ARC-ATL-009.jpg?v=2' },
-      { id: 'atelier-ird-bleu',         name: { en: 'Ird Bleu',         fr: 'Ird Bleu',         ar: 'متقزح أزرق'       }, hex: '#3CB8B2', image: '/products/ARC-ATL-010.jpg?v=2' },
+      { id: 'atelier-pb-miel',          name: { en: 'Pb Miel',          fr: 'Pb Miel',          ar: 'Pb عسلي'          }, hex: '#C9A84C', image: '/products/ARC-ATL-001.webp' },
+      { id: 'atelier-ec-blanc',         name: { en: 'EC Blanc',         fr: 'EC Blanc',         ar: 'EC أبيض'          }, hex: '#F5F5F0', image: '/products/ARC-ATL-002.webp' },
+      { id: 'atelier-pb-vert',          name: { en: 'Pb Vert',          fr: 'Pb Vert',          ar: 'Pb أخضر'          }, hex: '#2D5A27', image: '/products/ARC-ATL-003.webp' },
+      { id: 'atelier-pb-bleu',          name: { en: 'Pb Bleu',          fr: 'Pb Bleu',          ar: 'Pb أزرق'          }, hex: '#1A3A8F', image: '/products/ARC-ATL-004.webp' },
+      { id: 'atelier-mtl-gold',         name: { en: 'Mtl Gold',         fr: 'Mtl Gold',         ar: 'معدني ذهبي'       }, hex: '#D4AF37', image: '/products/ARC-ATL-005.webp' },
+      { id: 'atelier-mtl-rose-gold',    name: { en: 'Mtl Rose Gold',    fr: 'Mtl Rose Gold',    ar: 'معدني روز غولد'   }, hex: '#B5776B', image: '/products/ARC-ATL-006.webp' },
+      { id: 'atelier-mtl-silver',       name: { en: 'Mtl Silver',       fr: 'Mtl Silver',       ar: 'معدني فضي'        }, hex: '#A8A8A8', image: '/products/ARC-ATL-007.webp' },
+      { id: 'atelier-mtl-bleu-petrole', name: { en: 'Mtl Bleu Pétrole', fr: 'Mtl Bleu Pétrole', ar: 'معدني أزرق بترولي' }, hex: '#1B7A8C', image: '/products/ARC-ATL-008.webp' },
+      { id: 'atelier-ird-rose',         name: { en: 'Ird Rose',         fr: 'Ird Rose',         ar: 'متقزح وردي'       }, hex: '#E8B4B8', image: '/products/ARC-ATL-009.webp' },
+      { id: 'atelier-ird-bleu',         name: { en: 'Ird Bleu',         fr: 'Ird Bleu',         ar: 'متقزح أزرق'       }, hex: '#3CB8B2', image: '/products/ARC-ATL-010.webp' },
     ],
   },
   {
@@ -262,8 +262,8 @@ export const PRODUCTS: CatalogueProduct[] = [
     size: '10×30 cm',
     finish: 'Hand-painted',
     variants: [
-      { id: 'atelier-floral-3', name: { en: 'Floral 3', fr: 'Floral 3', ar: 'فلورال 3' }, hex: '#E8563A', image: '/products/ARC-ATL-011.jpg?v=2' },
-      { id: 'atelier-floral-4', name: { en: 'Floral 4', fr: 'Floral 4', ar: 'فلورال 4' }, hex: '#5A9BD4', image: '/products/ARC-ATL-012.jpg?v=2' },
+      { id: 'atelier-floral-3', name: { en: 'Floral 3', fr: 'Floral 3', ar: 'فلورال 3' }, hex: '#E8563A', image: '/products/ARC-ATL-011.webp' },
+      { id: 'atelier-floral-4', name: { en: 'Floral 4', fr: 'Floral 4', ar: 'فلورال 4' }, hex: '#5A9BD4', image: '/products/ARC-ATL-012.webp' },
     ],
   },
 
@@ -282,10 +282,10 @@ export const PRODUCTS: CatalogueProduct[] = [
     finish: 'Glazed',
     isFeatured: true,
     variants: [
-      { id: 'ducal-terracota', name: { en: 'Terracota', fr: 'Terracota', ar: 'تيراكوتا' }, hex: '#C4703A', image: '/products/ARC-DUC-001.jpg?v=2' },
-      { id: 'ducal-beige',     name: { en: 'Beige',     fr: 'Beige',     ar: 'بيج'       }, hex: '#D4BFA0', image: '/products/ARC-DUC-002.jpg?v=2' },
-      { id: 'ducal-antracita', name: { en: 'Antracita', fr: 'Antracita', ar: 'أنتراسيتا' }, hex: '#3D3D3D', image: '/products/ARC-DUC-005.jpg?v=2' },
-      { id: 'ducal-gris',      name: { en: 'Gris',      fr: 'Gris',      ar: 'رمادي'     }, hex: '#9B9B9B', image: '/products/ARC-DUC-006.jpg?v=2' },
+      { id: 'ducal-terracota', name: { en: 'Terracota', fr: 'Terracota', ar: 'تيراكوتا' }, hex: '#C4703A', image: '/products/ARC-DUC-001.webp' },
+      { id: 'ducal-beige',     name: { en: 'Beige',     fr: 'Beige',     ar: 'بيج'       }, hex: '#D4BFA0', image: '/products/ARC-DUC-002.webp' },
+      { id: 'ducal-antracita', name: { en: 'Antracita', fr: 'Antracita', ar: 'أنتراسيتا' }, hex: '#3D3D3D', image: '/products/ARC-DUC-005.webp' },
+      { id: 'ducal-gris',      name: { en: 'Gris',      fr: 'Gris',      ar: 'رمادي'     }, hex: '#9B9B9B', image: '/products/ARC-DUC-006.webp' },
     ],
   },
   {
@@ -301,13 +301,13 @@ export const PRODUCTS: CatalogueProduct[] = [
     size: '10×30 cm',
     finish: 'Hand-painted',
     variants: [
-      { id: 'ducal-dec-tucan',     name: { en: 'Tucan',     fr: 'Tucan',     ar: 'توكان'      }, hex: '#2D5A27', image: '/products/ARC-DUC-003.jpg?v=2' },
-      { id: 'ducal-dec-jamaica',   name: { en: 'Jamaica',   fr: 'Jamaica',   ar: 'جامايكا'    }, hex: '#E8563A', image: '/products/ARC-DUC-004.jpg?v=2' },
-      { id: 'ducal-dec-celestina', name: { en: 'Celestina', fr: 'Celestina', ar: 'سيليستينا'  }, hex: '#5A9BD4', image: '/products/ARC-DUC-007.jpg?v=2' },
-      { id: 'ducal-dec-gold',      name: { en: 'Gold',      fr: 'Gold',      ar: 'ذهبي'       }, hex: '#D4AF37', image: '/products/ARC-DUC-008.jpg?v=2' },
-      { id: 'ducal-dec-beige',     name: { en: 'Dec Beige', fr: 'Dec Beige', ar: 'ديك بيج'    }, hex: '#C8A882', image: '/products/ARC-DUC-009.jpg?v=2' },
-      { id: 'ducal-dec-silver',    name: { en: 'Silver',    fr: 'Silver',    ar: 'فضي'        }, hex: '#A8A8A8', image: '/products/ARC-DUC-010.jpg?v=2' },
-      { id: 'ducal-dec-gris',      name: { en: 'Dec Gris',  fr: 'Dec Gris',  ar: 'ديك رمادي'  }, hex: '#9B9B9B', image: '/products/ARC-DUC-011.jpg?v=2' },
+      { id: 'ducal-dec-tucan',     name: { en: 'Tucan',     fr: 'Tucan',     ar: 'توكان'      }, hex: '#2D5A27', image: '/products/ARC-DUC-003.webp' },
+      { id: 'ducal-dec-jamaica',   name: { en: 'Jamaica',   fr: 'Jamaica',   ar: 'جامايكا'    }, hex: '#E8563A', image: '/products/ARC-DUC-004.webp' },
+      { id: 'ducal-dec-celestina', name: { en: 'Celestina', fr: 'Celestina', ar: 'سيليستينا'  }, hex: '#5A9BD4', image: '/products/ARC-DUC-007.webp' },
+      { id: 'ducal-dec-gold',      name: { en: 'Gold',      fr: 'Gold',      ar: 'ذهبي'       }, hex: '#D4AF37', image: '/products/ARC-DUC-008.webp' },
+      { id: 'ducal-dec-beige',     name: { en: 'Dec Beige', fr: 'Dec Beige', ar: 'ديك بيج'    }, hex: '#C8A882', image: '/products/ARC-DUC-009.webp' },
+      { id: 'ducal-dec-silver',    name: { en: 'Silver',    fr: 'Silver',    ar: 'فضي'        }, hex: '#A8A8A8', image: '/products/ARC-DUC-010.webp' },
+      { id: 'ducal-dec-gris',      name: { en: 'Dec Gris',  fr: 'Dec Gris',  ar: 'ديك رمادي'  }, hex: '#9B9B9B', image: '/products/ARC-DUC-011.webp' },
     ],
   },
 
@@ -326,17 +326,17 @@ export const PRODUCTS: CatalogueProduct[] = [
     finish: 'Multi-finish',
     isFeatured: true,
     variants: [
-      { id: 'leaf-pb-bleu',          name: { en: 'Pb Bleu',          fr: 'Pb Bleu',          ar: 'أزرق'         }, hex: '#1A3A8F', image: '/products/ARC-LEA-001.jpg?v=2' },
-      { id: 'leaf-pb-miel',          name: { en: 'Pb Miel',          fr: 'Pb Miel',          ar: 'عسلي'         }, hex: '#C9A84C', image: '/products/ARC-LEA-002.jpg?v=2' },
-      { id: 'leaf-pb-vert',          name: { en: 'Pb Vert',          fr: 'Pb Vert',          ar: 'أخضر'         }, hex: '#2D5A27', image: '/products/ARC-LEA-003.jpg?v=2' },
-      { id: 'leaf-ec-blanc',         name: { en: 'EC Blanc',         fr: 'EC Blanc',         ar: 'أبيض'         }, hex: '#F5F5F0', image: '/products/ARC-LEA-004.jpg?v=2' },
-      { id: 'leaf-mtl-rose-gold',    name: { en: 'Mtl Rose Gold',    fr: 'Mtl Rose Gold',    ar: 'روز غولد'     }, hex: '#B5776B', image: '/products/ARC-LEA-005.jpg?v=2' },
-      { id: 'leaf-mtl-mauve',        name: { en: 'Mtl Mauve',        fr: 'Mtl Mauve',        ar: 'معدني موف'    }, hex: '#7B5EA7', image: '/products/ARC-LEA-006.jpg?v=2' },
-      { id: 'leaf-mtl-bleu-petrole', name: { en: 'Mtl Bleu Pétrole', fr: 'Mtl Bleu Pétrole', ar: 'أزرق بترولي' }, hex: '#1B7A8C', image: '/products/ARC-LEA-007.jpg?v=2' },
-      { id: 'leaf-floral-1',         name: { en: 'Floral 1',         fr: 'Floral 1',         ar: 'فلورال 1'     }, hex: '#6DAE6D', image: '/products/ARC-LEA-008.jpg?v=2' },
-      { id: 'leaf-floral-2',         name: { en: 'Floral 2',         fr: 'Floral 2',         ar: 'فلورال 2'     }, hex: '#E8A020', image: '/products/ARC-LEA-009.jpg?v=2' },
-      { id: 'leaf-floral-3',         name: { en: 'Floral 3',         fr: 'Floral 3',         ar: 'فلورال 3'     }, hex: '#E8563A', image: '/products/ARC-LEA-010.jpg?v=2' },
-      { id: 'leaf-floral-4',         name: { en: 'Floral 4',         fr: 'Floral 4',         ar: 'فلورال 4'     }, hex: '#5A9BD4', image: '/products/ARC-LEA-011.jpg?v=2' },
+      { id: 'leaf-pb-bleu',          name: { en: 'Pb Bleu',          fr: 'Pb Bleu',          ar: 'أزرق'         }, hex: '#1A3A8F', image: '/products/ARC-LEA-001.webp' },
+      { id: 'leaf-pb-miel',          name: { en: 'Pb Miel',          fr: 'Pb Miel',          ar: 'عسلي'         }, hex: '#C9A84C', image: '/products/ARC-LEA-002.webp' },
+      { id: 'leaf-pb-vert',          name: { en: 'Pb Vert',          fr: 'Pb Vert',          ar: 'أخضر'         }, hex: '#2D5A27', image: '/products/ARC-LEA-003.webp' },
+      { id: 'leaf-ec-blanc',         name: { en: 'EC Blanc',         fr: 'EC Blanc',         ar: 'أبيض'         }, hex: '#F5F5F0', image: '/products/ARC-LEA-004.webp' },
+      { id: 'leaf-mtl-rose-gold',    name: { en: 'Mtl Rose Gold',    fr: 'Mtl Rose Gold',    ar: 'روز غولد'     }, hex: '#B5776B', image: '/products/ARC-LEA-005.webp' },
+      { id: 'leaf-mtl-mauve',        name: { en: 'Mtl Mauve',        fr: 'Mtl Mauve',        ar: 'معدني موف'    }, hex: '#7B5EA7', image: '/products/ARC-LEA-006.webp' },
+      { id: 'leaf-mtl-bleu-petrole', name: { en: 'Mtl Bleu Pétrole', fr: 'Mtl Bleu Pétrole', ar: 'أزرق بترولي' }, hex: '#1B7A8C', image: '/products/ARC-LEA-007.webp' },
+      { id: 'leaf-floral-1',         name: { en: 'Floral 1',         fr: 'Floral 1',         ar: 'فلورال 1'     }, hex: '#6DAE6D', image: '/products/ARC-LEA-008.webp' },
+      { id: 'leaf-floral-2',         name: { en: 'Floral 2',         fr: 'Floral 2',         ar: 'فلورال 2'     }, hex: '#E8A020', image: '/products/ARC-LEA-009.webp' },
+      { id: 'leaf-floral-3',         name: { en: 'Floral 3',         fr: 'Floral 3',         ar: 'فلورال 3'     }, hex: '#E8563A', image: '/products/ARC-LEA-010.webp' },
+      { id: 'leaf-floral-4',         name: { en: 'Floral 4',         fr: 'Floral 4',         ar: 'فلورال 4'     }, hex: '#5A9BD4', image: '/products/ARC-LEA-011.webp' },
     ],
   },
 
@@ -354,9 +354,9 @@ export const PRODUCTS: CatalogueProduct[] = [
     size: '15×30 cm',
     finish: 'Matte / Hand-painted',
     variants: [
-      { id: 'gonos-blanc',    name: { en: 'Blanc',    fr: 'Blanc',    ar: 'أبيض' }, hex: '#F5F5F0', image: '/products/ARC-GON-002.jpg?v=2' },
-      { id: 'gonos-dec-girl', name: { en: 'Dec Girl', fr: 'Dec Girl', ar: 'بنت'  }, hex: '#F2A0B0', image: '/products/ARC-GON-001.jpg?v=2' },
-      { id: 'gonos-dec-boy',  name: { en: 'Dec Boy',  fr: 'Dec Boy',  ar: 'ولد'  }, hex: '#A0C4F2', image: '/products/ARC-GON-003.jpg?v=2' },
+      { id: 'gonos-blanc',    name: { en: 'Blanc',    fr: 'Blanc',    ar: 'أبيض' }, hex: '#F5F5F0', image: '/products/ARC-GON-002.webp' },
+      { id: 'gonos-dec-girl', name: { en: 'Dec Girl', fr: 'Dec Girl', ar: 'بنت'  }, hex: '#F2A0B0', image: '/products/ARC-GON-001.webp' },
+      { id: 'gonos-dec-boy',  name: { en: 'Dec Boy',  fr: 'Dec Boy',  ar: 'ولد'  }, hex: '#A0C4F2', image: '/products/ARC-GON-003.webp' },
     ],
   },
 
@@ -375,10 +375,10 @@ export const PRODUCTS: CatalogueProduct[] = [
     finish: 'Glossy',
     isFeatured: true,
     variants: [
-      { id: 'chic-r1-pb-bleu',  name: { en: 'Pb Bleu',  fr: 'Pb Bleu',  ar: 'أزرق'  }, hex: '#1A3A8F', image: '/products/ARC-CHI-001.jpg?v=2' },
-      { id: 'chic-r1-pb-miel',  name: { en: 'Pb Miel',  fr: 'Pb Miel',  ar: 'عسلي'  }, hex: '#C9A84C', image: '/products/ARC-CHI-002.jpg?v=2' },
-      { id: 'chic-r1-pb-vert',  name: { en: 'Pb Vert',  fr: 'Pb Vert',  ar: 'أخضر'  }, hex: '#2D5A27', image: '/products/ARC-CHI-003.jpg?v=2' },
-      { id: 'chic-r1-ec-blanc', name: { en: 'EC Blanc', fr: 'EC Blanc', ar: 'أبيض'  }, hex: '#F5F5F0', image: '/products/ARC-CHI-004.jpg?v=2' },
+      { id: 'chic-r1-pb-bleu',  name: { en: 'Pb Bleu',  fr: 'Pb Bleu',  ar: 'أزرق'  }, hex: '#1A3A8F', image: '/products/ARC-CHI-001.webp' },
+      { id: 'chic-r1-pb-miel',  name: { en: 'Pb Miel',  fr: 'Pb Miel',  ar: 'عسلي'  }, hex: '#C9A84C', image: '/products/ARC-CHI-002.webp' },
+      { id: 'chic-r1-pb-vert',  name: { en: 'Pb Vert',  fr: 'Pb Vert',  ar: 'أخضر'  }, hex: '#2D5A27', image: '/products/ARC-CHI-003.webp' },
+      { id: 'chic-r1-ec-blanc', name: { en: 'EC Blanc', fr: 'EC Blanc', ar: 'أبيض'  }, hex: '#F5F5F0', image: '/products/ARC-CHI-004.webp' },
     ],
   },
   {
@@ -395,16 +395,16 @@ export const PRODUCTS: CatalogueProduct[] = [
     finish: 'Glossy / Metallic',
     isFeatured: true,
     variants: [
-      { id: 'chic-r2-pb-bleu',           name: { en: 'Pb Bleu',          fr: 'Pb Bleu',          ar: 'أزرق'          }, hex: '#1A3A8F', image: '/products/ARC-CHI-005.jpg?v=2' },
-      { id: 'chic-r2-pb-miel',           name: { en: 'Pb Miel',          fr: 'Pb Miel',          ar: 'عسلي'          }, hex: '#C9A84C', image: '/products/ARC-CHI-006.jpg?v=2' },
-      { id: 'chic-r2-pb-vert',           name: { en: 'Pb Vert',          fr: 'Pb Vert',          ar: 'أخضر'          }, hex: '#2D5A27', image: '/products/ARC-CHI-007.jpg?v=2' },
-      { id: 'chic-r2-ec-blanc',          name: { en: 'EC Blanc',         fr: 'EC Blanc',         ar: 'أبيض'          }, hex: '#F5F5F0', image: '/products/ARC-CHI-008.jpg?v=2' },
-      { id: 'chic-r2-mtl-bleu-cobalte',  name: { en: 'Mtl Bleu Cobalte', fr: 'Mtl Bleu Cobalte', ar: 'أزرق كوبالت'  }, hex: '#0050C8', image: '/products/ARC-CHI-009.jpg?v=2' },
-      { id: 'chic-r2-mtl-mauve',         name: { en: 'Mtl Mauve',        fr: 'Mtl Mauve',        ar: 'موف'           }, hex: '#C040C0', image: '/products/ARC-CHI-010.jpg?v=2' },
-      { id: 'chic-r2-mtl-gold',          name: { en: 'Mtl Gold',         fr: 'Mtl Gold',         ar: 'معدني ذهبي'    }, hex: '#D4AF37', image: '/products/ARC-CHI-011.jpg?v=2' },
-      { id: 'chic-r2-mtl-rose-gold',     name: { en: 'Mtl Rose Gold',    fr: 'Mtl Rose Gold',    ar: 'روز غولد'      }, hex: '#B5776B', image: '/products/ARC-CHI-012.jpg?v=2' },
-      { id: 'chic-r2-mtl-silver',        name: { en: 'Mtl Silver',       fr: 'Mtl Silver',       ar: 'معدني فضي'     }, hex: '#A8A8A8', image: '/products/ARC-CHI-013.jpg?v=2' },
-      { id: 'chic-r2-mtl-bleu-petrole',  name: { en: 'Mtl Bleu Pétrole', fr: 'Mtl Bleu Pétrole', ar: 'أزرق بترولي'  }, hex: '#1B7A8C', image: '/products/ARC-CHI-014.jpg?v=2' },
+      { id: 'chic-r2-pb-bleu',           name: { en: 'Pb Bleu',          fr: 'Pb Bleu',          ar: 'أزرق'          }, hex: '#1A3A8F', image: '/products/ARC-CHI-005.webp' },
+      { id: 'chic-r2-pb-miel',           name: { en: 'Pb Miel',          fr: 'Pb Miel',          ar: 'عسلي'          }, hex: '#C9A84C', image: '/products/ARC-CHI-006.webp' },
+      { id: 'chic-r2-pb-vert',           name: { en: 'Pb Vert',          fr: 'Pb Vert',          ar: 'أخضر'          }, hex: '#2D5A27', image: '/products/ARC-CHI-007.webp' },
+      { id: 'chic-r2-ec-blanc',          name: { en: 'EC Blanc',         fr: 'EC Blanc',         ar: 'أبيض'          }, hex: '#F5F5F0', image: '/products/ARC-CHI-008.webp' },
+      { id: 'chic-r2-mtl-bleu-cobalte',  name: { en: 'Mtl Bleu Cobalte', fr: 'Mtl Bleu Cobalte', ar: 'أزرق كوبالت'  }, hex: '#0050C8', image: '/products/ARC-CHI-009.webp' },
+      { id: 'chic-r2-mtl-mauve',         name: { en: 'Mtl Mauve',        fr: 'Mtl Mauve',        ar: 'موف'           }, hex: '#C040C0', image: '/products/ARC-CHI-010.webp' },
+      { id: 'chic-r2-mtl-gold',          name: { en: 'Mtl Gold',         fr: 'Mtl Gold',         ar: 'معدني ذهبي'    }, hex: '#D4AF37', image: '/products/ARC-CHI-011.webp' },
+      { id: 'chic-r2-mtl-rose-gold',     name: { en: 'Mtl Rose Gold',    fr: 'Mtl Rose Gold',    ar: 'روز غولد'      }, hex: '#B5776B', image: '/products/ARC-CHI-012.webp' },
+      { id: 'chic-r2-mtl-silver',        name: { en: 'Mtl Silver',       fr: 'Mtl Silver',       ar: 'معدني فضي'     }, hex: '#A8A8A8', image: '/products/ARC-CHI-013.webp' },
+      { id: 'chic-r2-mtl-bleu-petrole',  name: { en: 'Mtl Bleu Pétrole', fr: 'Mtl Bleu Pétrole', ar: 'أزرق بترولي'  }, hex: '#1B7A8C', image: '/products/ARC-CHI-014.webp' },
     ],
   },
 
@@ -422,7 +422,7 @@ export const PRODUCTS: CatalogueProduct[] = [
     size: '20×20 cm',
     finish: 'Hand-painted',
     variants: [
-      { id: 'kronfel-classic', name: { en: 'Classic', fr: 'Classic', ar: 'كلاسيك' }, hex: '#1A3A8F', image: '/products/ARC-KRO-001.jpg?v=2' },
+      { id: 'kronfel-classic', name: { en: 'Classic', fr: 'Classic', ar: 'كلاسيك' }, hex: '#1A3A8F', image: '/products/ARC-KRO-001.webp' },
     ],
   },
 
@@ -440,7 +440,7 @@ export const PRODUCTS: CatalogueProduct[] = [
     size: '20×20 cm',
     finish: 'Hand-painted',
     variants: [
-      { id: 'casbah-classic', name: { en: 'Classic', fr: 'Classic', ar: 'كلاسيك' }, hex: '#2D5A27', image: '/products/ARC-CAS-001.jpg?v=2' },
+      { id: 'casbah-classic', name: { en: 'Classic', fr: 'Classic', ar: 'كلاسيك' }, hex: '#2D5A27', image: '/products/ARC-CAS-001.webp' },
     ],
   },
 
@@ -458,7 +458,7 @@ export const PRODUCTS: CatalogueProduct[] = [
     size: '20×20 cm',
     finish: 'Hand-painted',
     variants: [
-      { id: 'yasmine-classic', name: { en: 'Classic', fr: 'Classic', ar: 'كلاسيك' }, hex: '#C9A84C', image: '/products/ARC-YAS-001.jpg?v=2' },
+      { id: 'yasmine-classic', name: { en: 'Classic', fr: 'Classic', ar: 'كلاسيك' }, hex: '#C9A84C', image: '/products/ARC-YAS-001.webp' },
     ],
   },
 
@@ -476,7 +476,7 @@ export const PRODUCTS: CatalogueProduct[] = [
     size: '20×20 cm',
     finish: 'Hand-painted',
     variants: [
-      { id: 'nardjes-classic', name: { en: 'Classic', fr: 'Classic', ar: 'كلاسيك' }, hex: '#8B6F47', image: '/products/ARC-NAR-001.jpg?v=2' },
+      { id: 'nardjes-classic', name: { en: 'Classic', fr: 'Classic', ar: 'كلاسيك' }, hex: '#8B6F47', image: '/products/ARC-NAR-001.webp' },
     ],
   },
 
@@ -494,7 +494,7 @@ export const PRODUCTS: CatalogueProduct[] = [
     size: '20×20 cm',
     finish: 'Hand-painted',
     variants: [
-      { id: 'andalous-classic', name: { en: 'Classic', fr: 'Classic', ar: 'كلاسيك' }, hex: '#1A5276', image: '/products/ARC-AND-001.jpg?v=2' },
+      { id: 'andalous-classic', name: { en: 'Classic', fr: 'Classic', ar: 'كلاسيك' }, hex: '#1A5276', image: '/products/ARC-AND-001.webp' },
     ],
   },
 
@@ -512,7 +512,7 @@ export const PRODUCTS: CatalogueProduct[] = [
     size: '20×20 cm',
     finish: 'Hand-painted',
     variants: [
-      { id: 'azahra-classic', name: { en: 'Classic', fr: 'Classic', ar: 'كلاسيك' }, hex: '#C9A84C', image: '/products/ARC-AZA-001.jpg?v=2' },
+      { id: 'azahra-classic', name: { en: 'Classic', fr: 'Classic', ar: 'كلاسيك' }, hex: '#C9A84C', image: '/products/ARC-AZA-001.webp' },
     ],
   },
 ];

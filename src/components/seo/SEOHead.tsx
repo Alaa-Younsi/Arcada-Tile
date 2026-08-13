@@ -1,12 +1,20 @@
 import { Helmet } from 'react-helmet-async';
+import { useLocation } from 'react-router-dom';
+
+interface Breadcrumb {
+  name: string;
+  path: string;
+}
 
 interface SEOHeadProps {
   title?: string;
   description?: string;
   image?: string;
+  /** Absolute URL or path. Defaults to the route currently being rendered. */
   url?: string;
   type?: string;
   noIndex?: boolean;
+  breadcrumbs?: Breadcrumb[];
   productSchema?: {
     name: string;
     description: string;
@@ -15,46 +23,50 @@ interface SEOHeadProps {
   };
 }
 
-const SITE_URL    = 'https://arcada.dz';
+const SITE_URL    = 'https://www.arcadatile.com';
 const SITE_NAME   = 'ARCADA';
-const DEFAULT_IMG = '/image6.jpg';
+// Crawlers (Facebook, WhatsApp, X) handle WebP unreliably — social previews
+// point at a purpose-built 1200x630 JPEG instead of the site imagery.
+const DEFAULT_IMG = '/og-image.jpg';
 
 const DEFAULT_TITLE = 'ARCADA — Carreaux Céramiques | Fabricant Algérien Exclusif';
 const DEFAULT_DESC  =
-  "Premier et unique fabricant algérien de carreaux céramiques de prestige. 9 collections exclusives — conçues, produites et vendues directement par ARCADA depuis l'Algérie.";
+  "Premier et unique fabricant algérien de carreaux céramiques de prestige. 12 collections exclusives — conçues, produites et vendues directement par ARCADA depuis l'Algérie.";
 
-const ORG_SCHEMA = {
-  '@context': 'https://schema.org',
-  '@type': 'Organization',
-  name: SITE_NAME,
-  url: SITE_URL,
-  logo: `${SITE_URL}/logo.png`,
-  description: DEFAULT_DESC,
-  address: {
-    '@type': 'PostalAddress',
-    streetAddress: 'Sebala, Draria',
-    addressLocality: 'Alger',
-    addressCountry: 'DZ',
-  },
-  telephone: '+213550242454',
-  email: 'contact@arcada.dz',
-  sameAs: [
-    'https://www.instagram.com/arcada_original_tile/',
-    'https://www.facebook.com/profile.php?id=61562889557376',
-  ],
-};
+const absolute = (v: string) => (v.startsWith('http') ? v : `${SITE_URL}${v}`);
 
 export function SEOHead({
   title       = DEFAULT_TITLE,
   description = DEFAULT_DESC,
   image       = DEFAULT_IMG,
-  url         = SITE_URL,
+  url,
   type        = 'website',
   noIndex     = false,
+  breadcrumbs,
   productSchema,
 }: SEOHeadProps) {
-  const fullImage = image.startsWith('http') ? image : `${SITE_URL}${image}`;
-  const fullUrl   = url.startsWith('http')   ? url   : `${SITE_URL}${url}`;
+  const { pathname } = useLocation();
+
+  // Canonicalise to the page actually being viewed. Defaulting this to the
+  // site root would point every route at the homepage and drop the catalogue
+  // and product pages out of the index.
+  const canonicalPath = pathname === '/' ? '/' : pathname.replace(/\/+$/, '');
+  const fullUrl   = url ? absolute(url) : `${SITE_URL}${canonicalPath}`;
+  const fullImage = absolute(image);
+  const isDefaultImage = image === DEFAULT_IMG;
+
+  const breadcrumbJsonLd = breadcrumbs?.length
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: breadcrumbs.map((crumb, i) => ({
+          '@type': 'ListItem',
+          position: i + 1,
+          name: crumb.name,
+          item: absolute(crumb.path),
+        })),
+      }
+    : null;
 
   const productJsonLd = productSchema
     ? {
@@ -62,17 +74,17 @@ export function SEOHead({
         '@type': 'Product',
         name: productSchema.name,
         description: productSchema.description,
-        image: productSchema.image.startsWith('http')
-          ? productSchema.image
-          : `${SITE_URL}${productSchema.image}`,
+        image: absolute(productSchema.image),
         sku: productSchema.sku,
+        url: fullUrl,
         brand: { '@type': 'Brand', name: SITE_NAME },
         manufacturer: { '@type': 'Organization', name: SITE_NAME, url: SITE_URL },
         offers: {
           '@type': 'Offer',
+          url: fullUrl,
           availability: 'https://schema.org/InStock',
           priceCurrency: 'DZD',
-          seller: { '@type': 'Organization', name: SITE_NAME },
+          seller: { '@id': `${SITE_URL}/#organization` },
         },
       }
     : null;
@@ -82,7 +94,7 @@ export function SEOHead({
       {/* Core */}
       <title>{title}</title>
       <meta name="description" content={description} />
-      <meta name="robots" content={noIndex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large'} />
+      <meta name="robots" content={noIndex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1'} />
       <meta name="author" content={SITE_NAME} />
       <link rel="canonical" href={fullUrl} />
 
@@ -93,8 +105,10 @@ export function SEOHead({
       <meta property="og:description" content={description} />
       <meta property="og:image"       content={fullImage} />
       <meta property="og:image:alt"   content={`${SITE_NAME} — carreaux céramiques`} />
-      <meta property="og:image:width" content="1200" />
-      <meta property="og:image:height" content="630" />
+      {/* Only declared for the known-size social card; a per-page override
+          would make hardcoded dimensions wrong. */}
+      {isDefaultImage && <meta property="og:image:width" content="1200" />}
+      {isDefaultImage && <meta property="og:image:height" content="630" />}
       <meta property="og:url"         content={fullUrl} />
       <meta property="og:locale"      content="fr_DZ" />
 
@@ -104,8 +118,11 @@ export function SEOHead({
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image"       content={fullImage} />
 
-      {/* Structured data */}
-      <script type="application/ld+json">{JSON.stringify(ORG_SCHEMA)}</script>
+      {/* Page-scoped structured data. Organization / WebSite / Store live in
+          index.html so they are not re-declared on every route. */}
+      {breadcrumbJsonLd && (
+        <script type="application/ld+json">{JSON.stringify(breadcrumbJsonLd)}</script>
+      )}
       {productJsonLd && (
         <script type="application/ld+json">{JSON.stringify(productJsonLd)}</script>
       )}

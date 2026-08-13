@@ -6,7 +6,7 @@ export interface ColorVariant {
   name: Record<Lang, string>;
   hex: string;
   image: string;
-  // Optional per-room override. Falls back to /previews/{roomId}/{id}.jpg
+  // Optional per-room override. Falls back to /previews/{roomId}/{id}.webp
   roomImages?: Partial<Record<RoomId, string>>;
 }
 

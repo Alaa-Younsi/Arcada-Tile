@@ -25,7 +25,9 @@ function ProductCard({ variant, lang }: { variant: FlatVariant; lang: Lang }) {
         <div className="overflow-hidden bg-surface-warm aspect-[4/5] relative rounded-2xl">
           <img
             src={variant.image}
-            alt={`${variant.productName[lang]} — ${variant.name[lang]}`}
+            alt={`${variant.productName[lang]} ${variant.name[lang]} — carreau céramique ARCADA`}
+            width={800}
+            height={800}
             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
             loading="lazy"
             decoding="async"
@@ -73,15 +75,24 @@ export default function Category() {
   return (
     <>
       <SEOHead
-        title={`${category.name[lang]} — ARCADA`}
-        description={category.description[lang]}
+        title={`Collection ${category.name[lang]} — Carreaux ${category.shape} | ARCADA`}
+        description={`${category.description[lang]} ${flatVariants.length} coloris disponibles, fabriqués en Algérie par ARCADA.`}
+        breadcrumbs={[
+          { name: 'ARCADA', path: '/' },
+          { name: t('nav.catalogue'), path: '/catalogue' },
+          { name: category.name[lang], path: `/catalogue/${categorySlug}` },
+        ]}
       />
 
       {/* Hero */}
       <div className="relative h-[50vh] min-h-[380px] overflow-hidden">
         <img
           src={category.image}
-          alt={category.name[lang]}
+          alt={`Collection ${category.name[lang]} — carreaux céramiques ${category.shape} par ARCADA`}
+          width={800}
+          height={1000}
+          fetchPriority="high"
+          decoding="async"
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-dark/50" />
@@ -152,7 +163,11 @@ export default function Category() {
                 <div className="w-40 h-40 overflow-hidden bg-surface relative rounded-xl">
                   <img
                     src={cat.image}
-                    alt={cat.name[lang]}
+                    alt={`Collection ${cat.name[lang]} — ARCADA`}
+                    width={800}
+                    height={1000}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.06]"
                   />
                   <div className="absolute inset-0 bg-dark/30 group-hover:bg-dark/10 transition-colors" />

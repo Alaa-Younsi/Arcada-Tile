@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
@@ -19,6 +19,20 @@ export default function Home() {
   const featured = getFeaturedFlatVariants();
   const videoRef = useRef<HTMLVideoElement>(null);
   const [playing, setPlaying] = useState(true);
+  // The hero video is attached only once the page has painted, so its download
+  // never competes with the poster image or the first render.
+  const [videoSrc, setVideoSrc] = useState<string>();
+  const [videoReady, setVideoReady] = useState(false);
+
+  useEffect(() => {
+    const start = () => setVideoSrc('/background.mp4');
+    if (typeof window.requestIdleCallback === 'function') {
+      const id = window.requestIdleCallback(start, { timeout: 2000 });
+      return () => window.cancelIdleCallback(id);
+    }
+    const id = window.setTimeout(start, 400);
+    return () => window.clearTimeout(id);
+  }, []);
 
   const togglePlay = () => {
     if (!videoRef.current) return;
@@ -33,8 +47,8 @@ export default function Home() {
   return (
     <>
       <SEOHead
-        title="ARCADA — Surfaces Céramiques de Prestige"
-        description="Découvrez ARCADA, fabricant algérien de carreaux céramique premium. 9 collections exclusives."
+        title="ARCADA — Carreaux Céramiques | Fabricant Algérien Exclusif"
+        description="ARCADA, premier et unique fabricant algérien de carreaux céramiques de prestige. 12 collections exclusives conçues, produites et vendues directement. Showroom à Sebala, Draria, Alger."
       />
 
       {/* ─── HERO ──────────────────────────────────────────────────── */}
@@ -45,16 +59,23 @@ export default function Home() {
           muted
           loop
           playsInline
-          poster="/image1.jpg"
+          preload="none"
+          src={videoSrc}
+          onCanPlay={() => setVideoReady(true)}
           onError={(e) => { (e.target as HTMLVideoElement).style.display = 'none'; }}
-          className="absolute inset-0 w-full h-full object-cover"
-        >
-          <source src="/background.mp4" type="video/mp4" />
-        </video>
-        {/* Static fallback shown when video fails or is absent */}
+          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
+            videoReady ? 'opacity-100' : 'opacity-0'
+          }`}
+        />
+        {/* Painted immediately (preloaded in index.html) — carries the hero until
+            the video is decodable, and stays put if the video fails or is absent */}
         <img
-          src="/image1.jpg"
+          src="/image1.webp"
           alt="ARCADA"
+          width={1440}
+          height={1911}
+          fetchPriority="high"
+          decoding="async"
           className="absolute inset-0 w-full h-full object-cover -z-10"
           aria-hidden="true"
         />
@@ -251,7 +272,9 @@ export default function Home() {
               >
                 <img
                   src={cat.image}
-                  alt={cat.name[lang]}
+                  alt={`Collection ${cat.name[lang]} — carreaux céramiques ${cat.shape} par ARCADA`}
+                  width={800}
+                  height={1000}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
                   loading="lazy"
                   decoding="async"
@@ -326,7 +349,9 @@ export default function Home() {
                     <div className="aspect-[3/4] bg-surface overflow-hidden relative rounded-2xl">
                       <img
                         src={fv.image}
-                        alt={`${fv.productName[lang]} — ${fv.name[lang]}`}
+                        alt={`${fv.productName[lang]} ${fv.name[lang]} — carreau céramique ARCADA`}
+                        width={800}
+                        height={800}
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
                         loading="lazy"
                         decoding="async"
@@ -363,8 +388,10 @@ export default function Home() {
             className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-surface-warm"
           >
             <img
-              src="/about.jpg"
-              alt="ARCADA showroom"
+              src="/about.webp"
+              alt="Showroom ARCADA à Sebala, Draria — collections de carreaux céramiques"
+              width={900}
+              height={1125}
               className="w-full h-full object-cover"
               loading="lazy"
               decoding="async"
@@ -451,7 +478,15 @@ export default function Home() {
             transition={{ duration: 0.7, delay: 0.1 }}
             className="relative aspect-square overflow-hidden rounded-2xl hidden lg:block"
           >
-            <img src="/image6.jpg" alt="Carreaux céramiques ARCADA dans un espace intérieur" className="w-full h-full object-cover opacity-60" loading="lazy" decoding="async" />
+            <img
+              src="/image6.webp"
+              alt="Carreaux céramiques ARCADA dans un espace intérieur"
+              width={1200}
+              height={900}
+              className="w-full h-full object-cover opacity-60"
+              loading="lazy"
+              decoding="async"
+            />
             <div className="absolute inset-0 bg-gradient-to-br from-dark/60 to-transparent" />
           </motion.div>
         </div>

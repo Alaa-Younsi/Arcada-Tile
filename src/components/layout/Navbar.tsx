@@ -99,8 +99,11 @@ export function Navbar() {
               {/* CENTER � logo */}
               <Link to="/" className="flex justify-center" aria-label="ARCADA">
                 <img
-                  src="/logo.png"
-                  alt="ARCADA"
+                  src="/logo.webp"
+                  alt="ARCADA — carreaux céramiques"
+                  width={400}
+                  height={400}
+                  fetchPriority="high"
                   className={['w-auto object-contain transition-all duration-300', scrolled ? 'h-9' : 'h-12'].join(' ')}
                 />
               </Link>
@@ -160,7 +163,7 @@ export function Navbar() {
                 <div
                   className="relative overflow-hidden"
                   style={{
-                    backgroundImage: "url('/image6.jpg')",
+                    backgroundImage: "url('/image6.webp')",
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                     minHeight: '300px',
@@ -201,7 +204,7 @@ export function Navbar() {
         className={`fixed top-0 left-0 bottom-0 w-[85vw] max-w-sm bg-white z-[80] flex flex-col transition-transform duration-[380ms] ease-[cubic-bezier(0.32,0.72,0,1)] ${mobileOpen ? 'translate-x-0' : '-translate-x-full'}`}
       >
         <div className="flex items-center justify-between px-6 py-5 border-b border-[#E8E2D9]">
-          <img src="/logo.png" alt="ARCADA" className="h-10 w-auto object-contain" />
+          <img src="/logo.webp" alt="ARCADA" width={400} height={400} className="h-10 w-auto object-contain" />
           <button onClick={() => setMobileOpen(false)} className={`p-1.5 ${iconCls}`}>
             <X size={20} strokeWidth={1.5} />
           </button>

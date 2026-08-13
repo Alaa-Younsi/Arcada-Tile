@@ -4,68 +4,151 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <!--
+      Tags carrying data-rh="true" are the defaults served to crawlers that do
+      not execute JS (Facebook, WhatsApp, X). react-helmet-async claims tags
+      with that attribute and REPLACES them per route once the app mounts —
+      without it every one of these would be duplicated on every page.
+    -->
+
     <!-- Primary SEO -->
     <title>ARCADA — Carreaux Céramiques | Fabricant Algérien Exclusif</title>
-    <meta name="description" content="ARCADA, premier et unique fabricant algérien de carreaux céramiques de prestige. 9 collections exclusives — Silos, Atelier, Ducal, Leaf, Chic et plus. Conception, fabrication et vente directe depuis l'Algérie." />
-    <meta name="keywords" content="carreaux ceramique algerie, arcada ceramique, carrelage algerie, fabricant ceramique algerie, carreaux picket, carreaux zellige, brique ceramique, surface ceramique, tuile murale algerie, carreaux artisanaux" />
-    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-    <meta name="author" content="ARCADA" />
+    <meta data-rh="true" name="description" content="ARCADA, premier et unique fabricant algérien de carreaux céramiques de prestige. 12 collections exclusives — Silos, Atelier, Ducal, Leaf, Chic, Casbah et plus. Conception, fabrication et vente directe. Showroom à Sebala, Draria, Alger." />
+    <meta name="keywords" content="carreaux ceramique algerie, arcada ceramique, carrelage algerie, fabricant ceramique algerie, carreaux picket, carreaux zellige, brique ceramique, surface ceramique, tuile murale algerie, carreaux artisanaux, showroom carrelage alger, carrelage draria" />
+    <meta data-rh="true" name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta data-rh="true" name="author" content="ARCADA" />
     <meta name="theme-color" content="#1A1714" />
-    <link rel="canonical" href="https://arcada.dz/" />
+    <meta name="format-detection" content="telephone=no" />
+    <link data-rh="true" rel="canonical" href="https://www.arcadatile.com/" />
+
+    <!-- Geo targeting -->
+    <meta name="geo.region" content="DZ-16" />
+    <meta name="geo.placename" content="Alger" />
+    <meta name="geo.position" content="36.7169;3.0169" />
+    <meta name="ICBM" content="36.7169, 3.0169" />
 
     <!-- Open Graph -->
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="ARCADA" />
-    <meta property="og:title" content="ARCADA — Carreaux Céramiques | Fabricant Algérien Exclusif" />
-    <meta property="og:description" content="Premier et unique fabricant algérien de carreaux céramiques de prestige. 9 collections exclusives conçues, produites et vendues directement par ARCADA." />
-    <meta property="og:image" content="https://arcada.dz/image6.jpg" />
-    <meta property="og:image:alt" content="Collection de carreaux céramiques ARCADA" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:url" content="https://arcada.dz/" />
-    <meta property="og:locale" content="fr_DZ" />
+    <meta data-rh="true" property="og:type" content="website" />
+    <meta data-rh="true" property="og:site_name" content="ARCADA" />
+    <meta data-rh="true" property="og:title" content="ARCADA — Carreaux Céramiques | Fabricant Algérien Exclusif" />
+    <meta data-rh="true" property="og:description" content="Premier et unique fabricant algérien de carreaux céramiques de prestige. 12 collections exclusives conçues, produites et vendues directement par ARCADA." />
+    <meta data-rh="true" property="og:image" content="https://www.arcadatile.com/og-image.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta data-rh="true" property="og:image:alt" content="Collection de carreaux céramiques ARCADA" />
+    <meta data-rh="true" property="og:image:width" content="1200" />
+    <meta data-rh="true" property="og:image:height" content="630" />
+    <meta data-rh="true" property="og:url" content="https://www.arcadatile.com/" />
+    <meta data-rh="true" property="og:locale" content="fr_DZ" />
+    <meta property="og:locale:alternate" content="ar_DZ" />
+    <meta property="og:locale:alternate" content="en_US" />
 
     <!-- Twitter / X Card -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="ARCADA — Carreaux Céramiques | Fabricant Algérien Exclusif" />
-    <meta name="twitter:description" content="Premier et unique fabricant algérien de carreaux céramiques de prestige. 9 collections exclusives." />
-    <meta name="twitter:image" content="https://arcada.dz/image6.jpg" />
+    <meta data-rh="true" name="twitter:card" content="summary_large_image" />
+    <meta data-rh="true" name="twitter:title" content="ARCADA — Carreaux Céramiques | Fabricant Algérien Exclusif" />
+    <meta data-rh="true" name="twitter:description" content="Premier et unique fabricant algérien de carreaux céramiques de prestige. 12 collections exclusives." />
+    <meta data-rh="true" name="twitter:image" content="https://www.arcadatile.com/og-image.jpg" />
+    <meta name="twitter:image:alt" content="Collection de carreaux céramiques ARCADA" />
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="/favicon.png" />
-    <link rel="shortcut icon" type="image/jpg" href="/favicon.jpg" />
+    <!-- Icons -->
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
 
-    <!-- Resource hints -->
+    <!-- Resource hints + critical asset preloads -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="dns-prefetch" href="https://wa.me" />
+    <link rel="preload" as="image" href="/image1.webp" fetchpriority="high" />
+    <link rel="preload" as="image" href="/logo.webp" />
 
-    <!-- Fonts (display=swap prevents FOIT) -->
+    <!--
+      Fonts load without blocking the first paint: the sheet is fetched at low
+      priority as `print`, then promoted to `all` once it arrives. display=swap
+      keeps text visible with the fallback face in the meantime.
+    -->
     <link
+      rel="preload"
+      as="style"
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap"
-      rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap"
+      />
+    </noscript>
 
-    <!-- Structured data: Organization -->
+    <!-- Structured data -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "ARCADA",
-      "url": "https://arcada.dz",
-      "logo": "https://arcada.dz/logo.png",
-      "description": "Premier et unique fabricant algérien de carreaux céramiques de prestige.",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "Sebala, Draria",
-        "addressLocality": "Alger",
-        "addressCountry": "DZ"
-      },
-      "telephone": "+213550242454",
-      "email": "contact@arcada.dz",
-      "sameAs": [
-        "https://www.instagram.com/arcada_original_tile/",
-        "https://www.facebook.com/profile.php?id=61562889557376"
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://www.arcadatile.com/#organization",
+          "name": "ARCADA",
+          "url": "https://www.arcadatile.com/",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://www.arcadatile.com/icon-512.png",
+            "width": 512,
+            "height": 512
+          },
+          "image": "https://www.arcadatile.com/og-image.jpg",
+          "description": "Premier et unique fabricant algérien de carreaux céramiques de prestige.",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Sebala, Draria",
+            "addressLocality": "Alger",
+            "addressRegion": "Alger",
+            "addressCountry": "DZ"
+          },
+          "telephone": "+213550242454",
+          "email": "contact@arcada.dz",
+          "sameAs": [
+            "https://www.instagram.com/arcada_original_tile/",
+            "https://www.facebook.com/profile.php?id=61562889557376"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://www.arcadatile.com/#website",
+          "url": "https://www.arcadatile.com/",
+          "name": "ARCADA",
+          "inLanguage": "fr-DZ",
+          "publisher": { "@id": "https://www.arcadatile.com/#organization" }
+        },
+        {
+          "@type": "Store",
+          "@id": "https://www.arcadatile.com/#showroom",
+          "name": "ARCADA — Showroom",
+          "url": "https://www.arcadatile.com/",
+          "image": "https://www.arcadatile.com/og-image.jpg",
+          "description": "Showroom ARCADA — collections de carreaux céramiques fabriqués en Algérie.",
+          "parentOrganization": { "@id": "https://www.arcadatile.com/#organization" },
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Sebala, Draria",
+            "addressLocality": "Alger",
+            "addressRegion": "Alger",
+            "addressCountry": "DZ"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 36.7169,
+            "longitude": 3.0169
+          },
+          "telephone": "+213550242454",
+          "priceRange": "$$"
+        }
       ]
     }
     </script>

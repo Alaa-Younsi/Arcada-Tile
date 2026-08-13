@@ -24,7 +24,9 @@ function ProductCard({ variant, lang }: { variant: FlatVariant; lang: Lang }) {
         <div className="overflow-hidden bg-surface-warm aspect-[4/5] relative rounded-2xl">
           <img
             src={variant.image}
-            alt={`${variant.productName[lang]} — ${variant.name[lang]}`}
+            alt={`${variant.productName[lang]} ${variant.name[lang]} — carreau céramique ARCADA`}
+            width={800}
+            height={800}
             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
             loading="lazy"
             decoding="async"
@@ -65,8 +67,12 @@ export default function Catalogue() {
   return (
     <>
       <SEOHead
-        title={`${t('catalogue.title')} — ARCADA`}
-        description={t('catalogue.subtitle')}
+        title={`Catalogue — 12 Collections de Carreaux Céramiques | ARCADA`}
+        description={`${t('catalogue.subtitle')} Découvrez les 12 collections ARCADA — Silos, Atelier, Ducal, Leaf, Chic, Casbah et plus, fabriquées en Algérie.`}
+        breadcrumbs={[
+          { name: 'ARCADA', path: '/' },
+          { name: t('nav.catalogue'), path: '/catalogue' },
+        ]}
       />
 
       <div className="max-w-screen-2xl mx-auto px-6 lg:px-16 pt-32 pb-28 flex gap-16">

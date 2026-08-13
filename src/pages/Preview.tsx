@@ -19,12 +19,12 @@ interface PlaceConfig {
 }
 
 const PLACES: PlaceConfig[] = [
-  { id: 'pool',       label: { en: 'Pool',        fr: 'Piscine',       ar: 'المسبح'       }, defaultImage: '/scenes/pool.jpg',       Icon: Waves           },
-  { id: 'livingroom', label: { en: 'Living Room',  fr: 'Salon',         ar: 'غرفة المعيشة' }, defaultImage: '/scenes/livingroom.jpg', Icon: Sofa            },
-  { id: 'bathroom',   label: { en: 'Bathroom',     fr: 'Salle de bain', ar: 'الحمام'       }, defaultImage: '/scenes/bathroom.jpg',   Icon: Bath            },
-  { id: 'shop',       label: { en: 'Shop',         fr: 'Boutique',      ar: 'متجر'         }, defaultImage: '/scenes/shop.jpg',       Icon: ShoppingBag     },
-  { id: 'kitchen',    label: { en: 'Kitchen',      fr: 'Cuisine',       ar: 'المطبخ'       }, defaultImage: '/scenes/kitchen.jpg',    Icon: UtensilsCrossed },
-  { id: 'restaurant', label: { en: 'Restaurant',   fr: 'Restaurant',    ar: 'مطعم'         }, defaultImage: '/scenes/restaurant.jpg', Icon: Utensils        },
+  { id: 'pool',       label: { en: 'Pool',        fr: 'Piscine',       ar: 'المسبح'       }, defaultImage: '/scenes/pool.webp',       Icon: Waves           },
+  { id: 'livingroom', label: { en: 'Living Room',  fr: 'Salon',         ar: 'غرفة المعيشة' }, defaultImage: '/scenes/livingroom.webp', Icon: Sofa            },
+  { id: 'bathroom',   label: { en: 'Bathroom',     fr: 'Salle de bain', ar: 'الحمام'       }, defaultImage: '/scenes/bathroom.webp',   Icon: Bath            },
+  { id: 'shop',       label: { en: 'Shop',         fr: 'Boutique',      ar: 'متجر'         }, defaultImage: '/scenes/shop.webp',       Icon: ShoppingBag     },
+  { id: 'kitchen',    label: { en: 'Kitchen',      fr: 'Cuisine',       ar: 'المطبخ'       }, defaultImage: '/scenes/kitchen.webp',    Icon: UtensilsCrossed },
+  { id: 'restaurant', label: { en: 'Restaurant',   fr: 'Restaurant',    ar: 'مطعم'         }, defaultImage: '/scenes/restaurant.webp', Icon: Utensils        },
 ];
 
 interface CombinationInfo {
@@ -40,7 +40,7 @@ interface CombinationInfo {
 const SKU_LOOKUP: Record<string, { productName: Record<Lang, string>; variantName: Record<Lang, string>; hex: string } | undefined> = {};
 for (const product of PRODUCTS) {
   for (const variant of product.variants) {
-    const match = variant.image.match(/\/products\/(ARC-[A-Z]+-\d+)\.jpg/);
+    const match = variant.image.match(/\/products\/(ARC-[A-Z]+-\d+)\./);
     if (match) {
       SKU_LOOKUP[match[1]] = { productName: product.name, variantName: variant.name, hex: variant.hex };
     }
@@ -85,7 +85,7 @@ const RAW: Array<{ place: PlaceId; sku: string }> = [
 const COMBINATIONS: CombinationInfo[] = RAW.flatMap(({ place, sku }) => {
   const info = SKU_LOOKUP[sku];
   if (!info) return [];
-  return [{ place, sku, image: `/previews/combinations/${place}-${sku}.jpg`, ...info }];
+  return [{ place, sku, image: `/previews/combinations/${place}-${sku}.webp`, ...info }];
 });
 
 const fadeUp = {

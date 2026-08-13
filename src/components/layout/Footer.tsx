@@ -13,7 +13,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
           {/* Brand */}
           <div className="md:col-span-1">
-            <img src="/logo.png" alt="ARCADA" className="h-12 w-auto object-contain mb-6 brightness-0 invert" />
+            <img src="/logo.webp" alt="ARCADA" width={400} height={400} loading="lazy" decoding="async" className="h-12 w-auto object-contain mb-6 brightness-0 invert" />
             <p className="font-sans text-sm text-white/50 leading-relaxed mb-3 tracking-wide">
               {t("footer.tagline")}
             </p>

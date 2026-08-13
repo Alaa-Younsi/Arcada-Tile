@@ -30,7 +30,9 @@ function SmallProductCard({ variant, lang }: { variant: FlatVariant; lang: Lang 
         <div className="overflow-hidden bg-surface-warm aspect-[4/5] relative rounded-2xl">
           <img
             src={variant.image}
-            alt={`${variant.productName[lang]} — ${variant.name[lang]}`}
+            alt={`${variant.productName[lang]} ${variant.name[lang]} — carreau céramique ARCADA`}
+            width={800}
+            height={800}
             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
             loading="lazy"
             decoding="async"
@@ -97,8 +99,21 @@ export default function Product() {
   return (
     <>
       <SEOHead
-        title={`${product.name[lang]} — ARCADA`}
-        description={product.description[lang]}
+        title={`${product.name[lang]} ${selectedVariant.name[lang]} — ${product.size} | ARCADA`}
+        description={`${product.description[lang]} Format ${product.size}, finition ${product.finish}. Fabriqué en Algérie par ARCADA.`}
+        type="product"
+        breadcrumbs={[
+          { name: 'ARCADA', path: '/' },
+          { name: t('nav.catalogue'), path: '/catalogue' },
+          { name: category.name[lang], path: `/catalogue/${categorySlug}` },
+          { name: product.name[lang], path: `/catalogue/${categorySlug}/${productSlug}` },
+        ]}
+        productSchema={{
+          name: `${product.name[lang]} ${selectedVariant.name[lang]}`,
+          description: product.description[lang],
+          image: selectedVariant.image,
+          sku: selectedVariant.id,
+        }}
       />
 
       {/* Breadcrumb */}
@@ -130,7 +145,9 @@ export default function Product() {
               <img
                 key={selectedVariant.id}
                 src={selectedVariant.image}
-                alt={`${product.name[lang]} — ${selectedVariant.name[lang]}`}
+                alt={`${product.name[lang]} ${selectedVariant.name[lang]} — carreau céramique ARCADA ${product.size}`}
+                width={800}
+                height={800}
                 className="w-full h-full object-cover"
                 fetchPriority="high"
                 decoding="async"

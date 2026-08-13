@@ -9,7 +9,7 @@ export default function NotFound() {
 
   return (
     <>
-      <SEOHead title="404 — Page Not Found" />
+      <SEOHead title="404 — Page introuvable | ARCADA" noIndex />
 
       <div className="min-h-[80vh] flex flex-col items-center justify-center px-4 text-center bg-bg">
         <motion.div

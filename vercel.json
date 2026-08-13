@@ -27,9 +27,15 @@
       ]
     },
     {
-      "source": "/(.*\\.(?:jpg|jpeg|png|gif|webp|svg|ico|mp4|woff2|woff))",
+      "source": "/(.*\\.(?:jpg|jpeg|png|gif|webp|avif|svg|ico|mp4|woff2|woff))",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=604800, stale-while-revalidate=86400" }
+        { "key": "Cache-Control", "value": "public, max-age=2592000, stale-while-revalidate=604800" }
+      ]
+    },
+    {
+      "source": "/(sitemap.xml|robots.txt|site.webmanifest)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=3600, must-revalidate" }
       ]
     }
   ]

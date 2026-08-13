@@ -1,6 +1,8 @@
 User-agent: *
 Allow: /
+
+# No admin surface is served from this origin, but keep the paths unindexed.
 Disallow: /admin
 Disallow: /admin/*
 
-Sitemap: https://arcada.dz/sitemap.xml
+Sitemap: https://www.arcadatile.com/sitemap.xml
