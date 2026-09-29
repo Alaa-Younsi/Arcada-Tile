@@ -1,7 +1,7 @@
 # dependencies
 node_modules/
 dist/
-dist-server/
+*.tsbuildinfo
 
 # Python env (used locally for tooling)
 .venv/
@@ -19,7 +19,12 @@ __pycache__/
 
 # logs
 *.log
+
+# this project is managed with npm (package-lock.json)
+bun.lock
 bun.lockb
+yarn.lock
+pnpm-lock.yaml
 
 # OS
 .DS_Store

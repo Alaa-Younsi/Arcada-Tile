@@ -40,9 +40,7 @@ export function useHeroVideoSource(): string | undefined {
 
     // Phones get a 480p/325 kbps cut (~0.7 MB against 1.5 MB). The hero sits
     // under a heavy dark gradient at phone size, where the drop doesn't read.
-    const chosen = window.matchMedia('(max-width: 767px)').matches
-      ? MOBILE_SRC
-      : DESKTOP_SRC;
+    const chosen = window.matchMedia('(max-width: 767px)').matches ? MOBILE_SRC : DESKTOP_SRC;
 
     const start = () => setSrc(chosen);
 

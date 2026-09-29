@@ -1,5 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import { useLocation } from 'react-router-dom';
+import { SITE_NAME, SITE_URL } from '@/config/site';
 
 interface Breadcrumb {
   name: string;
@@ -10,9 +11,7 @@ interface SEOHeadProps {
   title?: string;
   description?: string;
   image?: string;
-  /** Absolute URL or path. Defaults to the route currently being rendered. */
-  url?: string;
-  type?: string;
+  type?: 'website' | 'product';
   noIndex?: boolean;
   breadcrumbs?: Breadcrumb[];
   productSchema?: {
@@ -23,35 +22,34 @@ interface SEOHeadProps {
   };
 }
 
-const SITE_URL    = 'https://www.arcadatile.com';
-const SITE_NAME   = 'ARCADA';
 // Crawlers (Facebook, WhatsApp, X) handle WebP unreliably — social previews
 // point at a purpose-built 1200x630 JPEG instead of the site imagery.
 const DEFAULT_IMG = '/og-image.jpg';
 
 const DEFAULT_TITLE = 'ARCADA — Carreaux Céramiques | Fabricant Algérien Exclusif';
-const DEFAULT_DESC  =
+const DEFAULT_DESC =
   "Premier et unique fabricant algérien de carreaux céramiques de prestige. 12 collections exclusives — conçues, produites et vendues directement par ARCADA depuis l'Algérie.";
 
 const absolute = (v: string) => (v.startsWith('http') ? v : `${SITE_URL}${v}`);
 
+/**
+ * Per-route <head>. Organization / WebSite / Store JSON-LD live in index.html
+ * so they are not re-declared on every route; this adds the page-scoped parts.
+ */
 export function SEOHead({
-  title       = DEFAULT_TITLE,
+  title = DEFAULT_TITLE,
   description = DEFAULT_DESC,
-  image       = DEFAULT_IMG,
-  url,
-  type        = 'website',
-  noIndex     = false,
+  image = DEFAULT_IMG,
+  type = 'website',
+  noIndex = false,
   breadcrumbs,
   productSchema,
 }: SEOHeadProps) {
   const { pathname } = useLocation();
 
-  // Canonicalise to the page actually being viewed. Defaulting this to the
-  // site root would point every route at the homepage and drop the catalogue
-  // and product pages out of the index.
-  const canonicalPath = pathname === '/' ? '/' : pathname.replace(/\/+$/, '');
-  const fullUrl   = url ? absolute(url) : `${SITE_URL}${canonicalPath}`;
+  // Canonicalise to the route being viewed, without query string (so every
+  // ?variant= of a product consolidates onto the product URL).
+  const canonical = `${SITE_URL}${pathname === '/' ? '/' : pathname.replace(/\/+$/, '')}`;
   const fullImage = absolute(image);
   const isDefaultImage = image === DEFAULT_IMG;
 
@@ -68,6 +66,8 @@ export function SEOHead({
       }
     : null;
 
+  // No `offers`: prices are quoted on request, and an Offer without a price is
+  // a hard error in Google's rich-result validation.
   const productJsonLd = productSchema
     ? {
         '@context': 'https://schema.org',
@@ -76,56 +76,41 @@ export function SEOHead({
         description: productSchema.description,
         image: absolute(productSchema.image),
         sku: productSchema.sku,
-        url: fullUrl,
+        url: canonical,
         brand: { '@type': 'Brand', name: SITE_NAME },
-        manufacturer: { '@type': 'Organization', name: SITE_NAME, url: SITE_URL },
-        offers: {
-          '@type': 'Offer',
-          url: fullUrl,
-          availability: 'https://schema.org/InStock',
-          priceCurrency: 'DZD',
-          seller: { '@id': `${SITE_URL}/#organization` },
-        },
+        manufacturer: { '@id': `${SITE_URL}/#organization` },
       }
     : null;
 
   return (
     <Helmet>
-      {/* Core */}
       <title>{title}</title>
       <meta name="description" content={description} />
-      <meta name="robots" content={noIndex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1'} />
-      <meta name="author" content={SITE_NAME} />
-      <link rel="canonical" href={fullUrl} />
+      <meta
+        name="robots"
+        content={noIndex ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1'}
+      />
+      <link rel="canonical" href={canonical} />
 
-      {/* Open Graph */}
-      <meta property="og:type"        content={type} />
-      <meta property="og:site_name"   content={SITE_NAME} />
-      <meta property="og:title"       content={title} />
+      <meta property="og:type" content={type} />
+      <meta property="og:site_name" content={SITE_NAME} />
+      <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
-      <meta property="og:image"       content={fullImage} />
-      <meta property="og:image:alt"   content={`${SITE_NAME} — carreaux céramiques`} />
-      {/* Only declared for the known-size social card; a per-page override
-          would make hardcoded dimensions wrong. */}
+      <meta property="og:image" content={fullImage} />
+      <meta property="og:image:alt" content={`${SITE_NAME} — carreaux céramiques`} />
+      {/* Dimensions are only known for the default social card. */}
       {isDefaultImage && <meta property="og:image:width" content="1200" />}
       {isDefaultImage && <meta property="og:image:height" content="630" />}
-      <meta property="og:url"         content={fullUrl} />
-      <meta property="og:locale"      content="fr_DZ" />
+      <meta property="og:url" content={canonical} />
+      <meta property="og:locale" content="fr_DZ" />
 
-      {/* Twitter / X */}
-      <meta name="twitter:card"        content="summary_large_image" />
-      <meta name="twitter:title"       content={title} />
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
-      <meta name="twitter:image"       content={fullImage} />
+      <meta name="twitter:image" content={fullImage} />
 
-      {/* Page-scoped structured data. Organization / WebSite / Store live in
-          index.html so they are not re-declared on every route. */}
-      {breadcrumbJsonLd && (
-        <script type="application/ld+json">{JSON.stringify(breadcrumbJsonLd)}</script>
-      )}
-      {productJsonLd && (
-        <script type="application/ld+json">{JSON.stringify(productJsonLd)}</script>
-      )}
+      {breadcrumbJsonLd && <script type="application/ld+json">{JSON.stringify(breadcrumbJsonLd)}</script>}
+      {productJsonLd && <script type="application/ld+json">{JSON.stringify(productJsonLd)}</script>}
     </Helmet>
   );
 }

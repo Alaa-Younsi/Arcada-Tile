@@ -3,7 +3,11 @@
     "home": "Home",
     "catalogue": "Catalogue",
     "collections": "Collections",
-    "visualizer": "Visualizer"
+    "visualizer": "Visualizer",
+    "menu": "Menu",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "language": "Language"
   },
   "hero": {
     "tagline": "Luxury Ceramic Surfaces",
@@ -11,62 +15,102 @@
     "subtitle": "Discover ARCADA — premium ceramic surfaces crafted for architecture and interior design.",
     "ctaVisualizer": "Open the Visualizer",
     "ctaCatalogue": "View Catalogue",
-    "visualizerTeaser": "Preview our tiles in your space in real time"
+    "visualizerTeaser": "Preview our tiles in your space in real time",
+    "pauseVideo": "Pause video",
+    "playVideo": "Play video"
+  },
+  "home": {
+    "manufacturer": {
+      "eyebrow": "Exclusive Manufacturer",
+      "lines": ["We design.", "We manufacture.", "We sell."],
+      "body": "ARCADA is the first and only Algerian manufacturer of these products. Every model, every color, every finish is designed and produced exclusively by our teams. These tiles exist nowhere else.",
+      "pillars": [
+        {
+          "title": "Design",
+          "body": "Every shape, pattern and colour is born in our studios."
+        },
+        {
+          "title": "Manufacture",
+          "body": "Made entirely in Algeria with complete artisanal mastery."
+        },
+        {
+          "title": "Direct Sales",
+          "body": "Sold directly by ARCADA — no intermediary."
+        }
+      ]
+    },
+    "collectionsCount": "{{count}} Collections",
+    "view": "View",
+    "featuredEyebrow": "Selection",
+    "featuredTitle": "Featured Products",
+    "aboutEyebrow": "About",
+    "aboutTitle": "About Arcada",
+    "aboutParagraphs": [
+      "Used since Antiquity for decorative purposes, ceramic tile has always been the essential artistic element for adorning the residences of the upper class and the most sumptuous buildings. Today, the industry has reduced tiling to a smooth and monotonous product limited to four imitations: marble, wood, stone and cement.",
+      "Arcada has come to restore ceramic tile to its rightful artistic place in the world of decoration, giving its clients the possibility of creating unique spaces that meet the most demanding requirements. This is achieved through the incorporation of geometric shapes displayed in relief, with multiple applications, colors, special decorative effects and shades, the use of high-quality raw materials and state-of-the-art equipment.",
+      "Our collections integrate perfectly into architectural elements and interior decoration, are durable, unalterable and require no maintenance.",
+      "We invite you to visit our showroom in Sebala (Draria) to discover our collections up close. We guarantee excellent service and irreproachable quality."
+    ],
+    "visualizerTitle": "Design your space",
+    "manifesto": "Quality, <accent>sustainability</accent>, design<br/> and innovation"
   },
   "catalogue": {
     "title": "Our Collections",
-    "subtitle": "Explore all ARCADA products — 9 collections, each a unique ceramic universe.",
+    "subtitle": "Explore all ARCADA products — 12 collections, each a unique ceramic universe.",
     "allCollections": "All Collections",
     "filterBy": "Filter by collection",
-    "products": "products",
-    "colorsAvailable": "colors available",
     "viewDetails": "View details",
-    "noPrice": "Request a quote",
     "size": "Size",
     "finish": "Finish",
     "variants": "Colors & Variants",
-    "selectColor": "Select a color",
     "previewInRoom": "Preview in my space",
-    "relatedProducts": "In the same collection"
+    "relatedProducts": "In the same collection",
+    "emptyCollection": "No products in this collection yet.",
+    "madeBy": "Made exclusively by ARCADA"
   },
   "visualizer": {
     "title": "Space Visualizer",
     "subtitle": "Choose a space and discover our tile combinations.",
-    "reset": "Reset"
+    "reset": "Reset",
+    "stepSpace": "1 · Choose a space",
+    "stepCombination": "2 · Choose a combination",
+    "choosePrompt": "Choose a combination",
+    "disclaimer": "Indicative result — AI visualisation",
+    "fullscreen": "Full screen",
+    "closeFullscreen": "Close full screen",
+    "places": {
+      "pool": "Pool",
+      "livingroom": "Living Room",
+      "bathroom": "Bathroom",
+      "shop": "Shop",
+      "kitchen": "Kitchen",
+      "restaurant": "Restaurant"
+    }
   },
   "product": {
-    "description": "Description",
-    "size": "Size",
-    "finish": "Finish",
-    "reference": "Reference",
-    "colors": "Colors",
-    "relatedProducts": "You may also like",
-    "view": "View Collection",
     "category": "Collection"
   },
   "contact": {
+    "title": "Contact",
     "cta": "Get in touch",
-    "interested": "Interested in this product?",
-    "reachOut": "Contact us to get pricing and availability.",
-    "email": "contact@arcada.dz",
-    "phone": "+213 550 24 24 54",
-    "address": "Sebala, Draria, Alger, Algérie"
+    "address": "Sebala, Draria, Algiers, Algeria"
   },
   "footer": {
     "tagline": "Algeria's exclusive ceramic surface manufacturer — we design, produce and sell every piece ourselves.",
-    "rights": "© 2026 ARCADA. All rights reserved.",
+    "exclusive": "Exclusive manufacturer",
+    "rights": "© {{year}} ARCADA. All rights reserved.",
     "quickLinks": "Navigation",
-    "followUs": "Follow us"
+    "madeIn": "Made in Algeria",
+    "credit": "Website by Alaa Younsi"
   },
   "common": {
-    "loading": "Loading...",
-    "error": "Something went wrong",
     "notFound": "Page Not Found",
     "notFoundSub": "The page you are looking for does not exist.",
     "goHome": "Back to Home",
     "discover": "Discover",
     "viewAll": "View All",
-    "collection": "Collection",
-    "backTo": "Back to"
+    "backTo": "Back to",
+    "breadcrumb": "Breadcrumb",
+    "scrollTop": "Back to top"
   }
 }

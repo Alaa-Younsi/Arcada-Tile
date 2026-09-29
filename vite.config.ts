@@ -1,21 +1,24 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import path from 'path'
+import path from 'node:path';
+import react from '@vitejs/plugin-react';
+import { defineConfig } from 'vite';
 
 export default defineConfig({
   plugins: [react()],
   resolve: { alias: { '@': path.resolve(__dirname, './src') } },
   build: {
-    // Split the rarely-changing dependencies out of the app bundle so a content
-    // or copy change does not force visitors to re-download the whole vendor set.
     rollupOptions: {
       output: {
+        // Rarely-changing vendors get their own long-cached chunks, so a copy
+        // or catalogue change doesn't make visitors re-download them.
         manualChunks: {
-          react: ['react', 'react-dom', 'react-router-dom'],
+          react: ['react', 'react-dom', 'react-router', 'react-router-dom'],
           motion: ['framer-motion'],
           i18n: ['i18next', 'react-i18next', 'i18next-browser-languagedetector'],
         },
+        // Fold tiny shared modules into their importers instead of paying a
+        // request for a few hundred bytes.
+        experimentalMinChunkSize: 2_000,
       },
     },
   },
-})
+});

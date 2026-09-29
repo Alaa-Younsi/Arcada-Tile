@@ -2,11 +2,20 @@
   "name": "arcada",
   "private": true,
   "version": "2.0.0",
+  "description": "ARCADA — bilingual catalogue and room visualizer for an Algerian ceramic tile manufacturer.",
+  "author": "Alaa Younsi",
+  "license": "UNLICENSED",
   "type": "module",
+  "engines": {
+    "node": ">=20.19"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "typecheck": "tsc -b",
+    "lint": "biome check .",
+    "format": "biome format --write ."
   },
   "dependencies": {
     "framer-motion": "^11.2.10",
@@ -17,17 +26,18 @@
     "react-dom": "^18.3.1",
     "react-helmet-async": "^2.0.4",
     "react-i18next": "^14.1.2",
-    "react-router-dom": "^6.23.1"
+    "react-router-dom": "^7.18.4"
   },
   "devDependencies": {
+    "@biomejs/biome": "2.5.14",
     "@types/node": "^20.14.2",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
-    "@vitejs/plugin-react": "^4.3.1",
+    "@vitejs/plugin-react": "^5.2.0",
     "autoprefixer": "^10.4.19",
     "postcss": "^8.4.38",
     "tailwindcss": "^3.4.4",
     "typescript": "^5.9.3",
-    "vite": "^5.3.1"
+    "vite": "^7.3.6"
   }
 }

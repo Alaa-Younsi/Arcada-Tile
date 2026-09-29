@@ -1,21 +1,43 @@
-MIT License
+Copyright (c) 2026 Alaa Younsi. All rights reserved.
 
-Copyright (c) 2026 Alaa Younsi
+PROPRIETARY SOFTWARE — NO LICENSE IS GRANTED
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+This repository and all of its contents, including but not limited to the
+source code, markup, stylesheets, configuration, build tooling, documentation,
+user-interface design, layouts, animations and visual identity of the website
+(together, the "Work"), were created by Alaa Younsi and are protected by
+copyright and other intellectual-property laws and international treaties.
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+No permission of any kind is granted. Without the prior written consent of
+Alaa Younsi, you may not, in whole or in any part:
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+  1. copy, reproduce, download for reuse, or store the Work;
+  2. modify, adapt, translate, or create derivative works from the Work;
+  3. publish, distribute, sublicense, sell, rent, lease, or otherwise transfer
+     the Work or any copy of it;
+  4. deploy, host, or run the Work, or use any part of it as the basis of
+     another website, template, theme, product, or service;
+  5. use the Work to train, fine-tune, or evaluate machine-learning models.
+
+Access to this repository, whether private or public, does not grant any
+licence or right. If the repository is hosted publicly on GitHub, the only
+rights granted are those that GitHub's Terms of Service require for viewing
+and forking within GitHub itself; no other right is granted, express or
+implied.
+
+Brand assets. The ARCADA name and logo, product photography, room renders,
+video footage, and catalogue content are the property of their respective
+owner and are included with permission. They are not licensed to you under
+any terms.
+
+Third-party software. Open-source dependencies declared in package.json are
+not part of the Work and remain subject to their own licences.
+
+Any unauthorised use of the Work is strictly prohibited and may result in
+civil and criminal liability.
+
+Permission requests: Alaa Younsi — https://alaayounsi.vercel.app/
+
+THE WORK IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY CLAIM, DAMAGES, OR
+OTHER LIABILITY ARISING FROM, OUT OF, OR IN CONNECTION WITH THE WORK.

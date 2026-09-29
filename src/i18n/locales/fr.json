@@ -3,7 +3,11 @@
     "home": "Accueil",
     "catalogue": "Catalogue",
     "collections": "Collections",
-    "visualizer": "Visualiseur"
+    "visualizer": "Visualiseur",
+    "menu": "Menu",
+    "openMenu": "Ouvrir le menu",
+    "closeMenu": "Fermer le menu",
+    "language": "Langue"
   },
   "hero": {
     "tagline": "Surfaces Céramiques de Prestige",
@@ -11,62 +15,102 @@
     "subtitle": "Découvrez ARCADA — des surfaces céramiques premium conçues pour l'architecture et le design d'intérieur.",
     "ctaVisualizer": "Ouvrir le Visualiseur",
     "ctaCatalogue": "Voir le Catalogue",
-    "visualizerTeaser": "Prévisualisez nos carreaux dans votre espace en temps réel"
+    "visualizerTeaser": "Prévisualisez nos carreaux dans votre espace en temps réel",
+    "pauseVideo": "Mettre la vidéo en pause",
+    "playVideo": "Lire la vidéo"
+  },
+  "home": {
+    "manufacturer": {
+      "eyebrow": "Fabricant exclusif",
+      "lines": ["Nous concevons.", "Nous fabriquons.", "Nous vendons."],
+      "body": "ARCADA est le premier et unique fabricant algérien de ces produits. Chaque modèle, chaque couleur, chaque finition est conçu et produit exclusivement par nos équipes. Ces carreaux n'existent nulle part ailleurs.",
+      "pillars": [
+        {
+          "title": "Conception",
+          "body": "Chaque forme, motif et couleur naît dans nos ateliers."
+        },
+        {
+          "title": "Fabrication",
+          "body": "Produit entièrement en Algérie, avec une maîtrise artisanale totale."
+        },
+        {
+          "title": "Distribution directe",
+          "body": "Vendu directement par ARCADA — aucun intermédiaire."
+        }
+      ]
+    },
+    "collectionsCount": "{{count}} Collections",
+    "view": "Voir",
+    "featuredEyebrow": "Sélection",
+    "featuredTitle": "Produits phares",
+    "aboutEyebrow": "À propos",
+    "aboutTitle": "Présentation d'Arcada",
+    "aboutParagraphs": [
+      "Employé depuis l'Antiquité à des fins décoratives, le carreau céramique a toujours été l'élément artistique essentiel pour décorer les résidences de la classe aisée et les bâtiments les plus somptueux. Aujourd'hui, l'industrie a fait du carrelage un produit lisse et monotone limité à quatre imitations : marbre, bois, pierre et ciment.",
+      "Arcada est venue rendre au carreau céramique sa place artistique dans le monde de la décoration, donnant ainsi à ses clients la possibilité de créer des espaces uniques répondant aux besoins des plus exigeants ! Cet objectif est atteint grâce à l'incorporation de formes géométriques qui s'affichent en relief, avec de multiples applications, coloris, effets décoratifs spéciaux et nuances, l'application de matière première de haute qualité et l'utilisation d'équipements de dernière technologie.",
+      "Nos collections s'intègrent parfaitement dans les éléments d'architecture ou éléments de décoration d'intérieur, sont durables, inaltérables et ne nécessitent aucun entretien.",
+      "Nous vous invitons à visiter notre showroom à Sebala (Draria) pour voir de près nos collections. Nous vous assurons un service excellent et une qualité irréprochable."
+    ],
+    "visualizerTitle": "Créez votre espace",
+    "manifesto": "Qualité, <accent>durabilité</accent>, design<br/> et innovation"
   },
   "catalogue": {
     "title": "Nos Collections",
-    "subtitle": "Explorez tous les produits ARCADA — 9 collections, chacune un univers céramique unique.",
+    "subtitle": "Explorez tous les produits ARCADA — 12 collections, chacune un univers céramique unique.",
     "allCollections": "Toutes les collections",
     "filterBy": "Filtrer par collection",
-    "products": "produits",
-    "colorsAvailable": "couleurs disponibles",
     "viewDetails": "Voir les détails",
-    "noPrice": "Demander un devis",
     "size": "Format",
     "finish": "Finition",
     "variants": "Couleurs & Variantes",
-    "selectColor": "Choisir une couleur",
     "previewInRoom": "Prévisualiser dans mon espace",
-    "relatedProducts": "Dans la même collection"
+    "relatedProducts": "Dans la même collection",
+    "emptyCollection": "Aucun produit dans cette collection pour le moment.",
+    "madeBy": "Fabriqué exclusivement par ARCADA"
   },
   "visualizer": {
     "title": "Visualiseur d'Espace",
     "subtitle": "Choisissez un espace et découvrez nos combinaisons de carreaux.",
-    "reset": "Réinitialiser"
+    "reset": "Réinitialiser",
+    "stepSpace": "1 · Choisir un espace",
+    "stepCombination": "2 · Choisir une combinaison",
+    "choosePrompt": "Choisissez une combinaison",
+    "disclaimer": "Résultat indicatif — visualisation IA",
+    "fullscreen": "Plein écran",
+    "closeFullscreen": "Quitter le plein écran",
+    "places": {
+      "pool": "Piscine",
+      "livingroom": "Salon",
+      "bathroom": "Salle de bain",
+      "shop": "Boutique",
+      "kitchen": "Cuisine",
+      "restaurant": "Restaurant"
+    }
   },
   "product": {
-    "description": "Description",
-    "size": "Format",
-    "finish": "Finition",
-    "reference": "Référence",
-    "colors": "Couleurs",
-    "relatedProducts": "Vous aimerez aussi",
-    "view": "Voir la collection",
     "category": "Collection"
   },
   "contact": {
+    "title": "Contact",
     "cta": "Nous contacter",
-    "interested": "Intéressé par ce produit ?",
-    "reachOut": "Contactez-nous pour obtenir les tarifs et la disponibilité.",
-    "email": "contact@arcada.dz",
-    "phone": "+213 550 24 24 54",
     "address": "Sebala, Draria, Alger, Algérie"
   },
   "footer": {
     "tagline": "Fabricant exclusif algérien de surfaces céramiques — nous concevons, produisons et vendons chaque pièce nous-mêmes.",
-    "rights": "© 2026 ARCADA. Tous droits réservés.",
+    "exclusive": "Fabricant & créateur exclusif",
+    "rights": "© {{year}} ARCADA. Tous droits réservés.",
     "quickLinks": "Navigation",
-    "followUs": "Nous suivre"
+    "madeIn": "Fait en Algérie",
+    "credit": "Site réalisé par Alaa Younsi"
   },
   "common": {
-    "loading": "Chargement...",
-    "error": "Une erreur est survenue",
     "notFound": "Page introuvable",
     "notFoundSub": "La page que vous recherchez n'existe pas.",
     "goHome": "Retour à l'accueil",
     "discover": "Découvrir",
     "viewAll": "Tout voir",
-    "collection": "Collection",
-    "backTo": "Retour à"
+    "backTo": "Retour à",
+    "breadcrumb": "Fil d'Ariane",
+    "scrollTop": "Retour en haut"
   }
 }

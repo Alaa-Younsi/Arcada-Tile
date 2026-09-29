@@ -1,39 +1,52 @@
-import { useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { useTranslation } from 'react-i18next';
+import { m } from 'framer-motion';
 import { Pause, Play } from 'lucide-react';
+import { useRef, useState } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
+import { variantHref } from '@/components/catalogue/ProductCard';
 import { SEOHead } from '@/components/seo/SEOHead';
+import { CATEGORIES, getCategory, getFeaturedFlatVariants } from '@/data/catalogue';
 import { useHeroVideoSource } from '@/hooks/useHeroVideoSource';
-import { CATEGORIES, getFeaturedFlatVariants } from '@/data/catalogue';
-import type { Lang } from '@/types';
+import { useLang } from '@/hooks/useLang';
+import { HIGH_FETCH_PRIORITY } from '@/lib/fetchPriority';
 
+const FEATURED = getFeaturedFlatVariants().slice(0, 8);
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
   show: (i = 0) => ({ opacity: 1, y: 0, transition: { duration: 0.6, delay: i * 0.08 } }),
 };
 
+const fromStart = { initial: { opacity: 0, x: -20 }, whileInView: { opacity: 1, x: 0 }, viewport: { once: true } };
+const fromEnd = { initial: { opacity: 0, x: 20 }, whileInView: { opacity: 1, x: 0 }, viewport: { once: true } };
+
+const PILLAR_ICONS = ['◈', '◉', '◎'];
+
+const eyebrowCls = 'font-sans text-[10px] uppercase tracking-[0.35em] text-accent mb-3';
+const sectionTitleCls = 'font-display font-light text-[clamp(28px,4vw,52px)]';
+
 export default function Home() {
-  const { t, i18n } = useTranslation();
-  const lang = i18n.language as Lang;
-  const featured = getFeaturedFlatVariants();
+  const { t } = useTranslation();
+  const lang = useLang();
+
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [playing, setPlaying] = useState(true);
-  // Resolves to a source only on connections that can afford one, and only
-  // after the first paint. Undefined means this visitor keeps the poster.
+  // Only resolves on connections that can afford the video, after first paint.
   const videoSrc = useHeroVideoSource();
   const [videoReady, setVideoReady] = useState(false);
+  const [videoFailed, setVideoFailed] = useState(false);
+  // Mirrors the element's real state — autoplay can be refused (e.g. iOS Low Power Mode).
+  const [playing, setPlaying] = useState(false);
 
   const togglePlay = () => {
-    if (!videoRef.current) return;
-    if (playing) {
-      videoRef.current.pause();
-    } else {
-      void videoRef.current.play();
-    }
-    setPlaying(!playing);
+    const video = videoRef.current;
+    if (!video) return;
+    if (video.paused) void video.play();
+    else video.pause();
   };
+
+  const pillars = t('home.manufacturer.pillars', { returnObjects: true }) as { title: string; body: string }[];
+  const manufacturerLines = t('home.manufacturer.lines', { returnObjects: true }) as string[];
+  const aboutParagraphs = t('home.aboutParagraphs', { returnObjects: true }) as string[];
 
   return (
     <>
@@ -42,9 +55,20 @@ export default function Home() {
         description="ARCADA, premier et unique fabricant algérien de carreaux céramiques de prestige. 12 collections exclusives conçues, produites et vendues directement. Showroom à Sebala, Draria, Alger."
       />
 
-      {/* ─── HERO ──────────────────────────────────────────────────── */}
-      <section className="relative h-screen min-h-[600px] overflow-hidden">
-        {videoSrc && (
+      {/* ─── HERO ───────────────────────────────────────────────────── */}
+      <section className="relative h-[100svh] min-h-[600px] overflow-hidden bg-dark">
+        {/* Poster: a still of the same footage, preloaded in index.html. It carries
+            the hero until the video can play, and for good when it can't. */}
+        <img
+          src="/image1.webp"
+          alt=""
+          width={1440}
+          height={1911}
+          {...HIGH_FETCH_PRIORITY}
+          decoding="async"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        {videoSrc && !videoFailed && (
           <video
             ref={videoRef}
             autoPlay
@@ -54,59 +78,47 @@ export default function Home() {
             preload="none"
             src={videoSrc}
             onCanPlay={() => setVideoReady(true)}
-            onError={(e) => { (e.target as HTMLVideoElement).style.display = 'none'; }}
+            onPlay={() => setPlaying(true)}
+            onPause={() => setPlaying(false)}
+            onError={() => setVideoFailed(true)}
             className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
               videoReady ? 'opacity-100' : 'opacity-0'
             }`}
           />
         )}
-        {/* Painted immediately (preloaded in index.html) — carries the hero until
-            the video is decodable, and stays put if the video fails or is absent */}
-        <img
-          src="/image1.webp"
-          alt="ARCADA"
-          width={1440}
-          height={1911}
-          fetchPriority="high"
-          decoding="async"
-          className="absolute inset-0 w-full h-full object-cover -z-10"
-          aria-hidden="true"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-dark/70 via-dark/40 to-dark/10" />
+        <div className="absolute inset-0 bg-gradient-to-r rtl:bg-gradient-to-l from-dark/70 via-dark/40 to-dark/10" />
 
-        {/* Pause / Resume — only meaningful once there is a video to control */}
-        {videoReady && (
+        {videoReady && !videoFailed && (
           <button
+            type="button"
             onClick={togglePlay}
-            aria-label={playing ? 'Pause' : 'Play'}
-            className="absolute bottom-8 right-8 z-10 flex items-center justify-center w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 text-white hover:bg-white/30 transition-colors duration-200"
+            aria-label={playing ? t('hero.pauseVideo') : t('hero.playVideo')}
+            className="absolute bottom-8 end-8 z-10 flex items-center justify-center w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 text-white hover:bg-white/30 transition-colors duration-200"
           >
             {playing ? <Pause size={14} /> : <Play size={14} />}
           </button>
         )}
 
         <div className="relative h-full flex flex-col justify-end px-6 lg:px-16 pb-20 max-w-screen-2xl mx-auto">
-          <motion.div
+          <m.p
             variants={fadeUp}
             initial="hidden"
             animate="show"
             custom={0}
+            className="font-sans text-[10px] uppercase tracking-[0.4em] text-white/60 mb-5"
           >
-            <p className="font-sans text-[10px] uppercase tracking-[0.4em] text-white/60 mb-5">
-              {t('hero.tagline')}
-            </p>
-          </motion.div>
-          <motion.h1
+            {t('hero.tagline')}
+          </m.p>
+          <m.h1
             variants={fadeUp}
             initial="hidden"
             animate="show"
             custom={1}
-            className="font-display font-light text-white mb-6 leading-[1.05]"
-            style={{ fontSize: 'clamp(44px, 7vw, 100px)' }}
+            className="font-display font-light text-white mb-6 leading-[1.05] text-[clamp(44px,7vw,100px)]"
           >
             {t('hero.title')}
-          </motion.h1>
-          <motion.p
+          </m.h1>
+          <m.p
             variants={fadeUp}
             initial="hidden"
             animate="show"
@@ -114,8 +126,8 @@ export default function Home() {
             className="font-sans text-white/70 text-sm max-w-md tracking-wide leading-relaxed mb-10"
           >
             {t('hero.subtitle')}
-          </motion.p>
-          <motion.div
+          </m.p>
+          <m.div
             variants={fadeUp}
             initial="hidden"
             animate="show"
@@ -135,250 +147,170 @@ export default function Home() {
               {t('hero.ctaCatalogue')}
               <span className="w-6 h-px bg-current group-hover:w-12 transition-all duration-300" />
             </Link>
-          </motion.div>
-          <motion.p
+          </m.div>
+          <m.p
             variants={fadeUp}
             initial="hidden"
             animate="show"
             custom={4}
             className="mt-8 font-sans text-white/40 text-xs tracking-widest"
           >
-            ✦ {t('hero.visualizerTeaser')}
-          </motion.p>
+            <span aria-hidden="true">✦ </span>
+            {t('hero.visualizerTeaser')}
+          </m.p>
         </div>
       </section>
 
       {/* ─── EXCLUSIVE MANUFACTURER ─────────────────────────────────── */}
       <section className="py-20 md:py-28 bg-dark">
         <div className="max-w-screen-2xl mx-auto px-6 lg:px-16 flex flex-col lg:flex-row items-center gap-16">
-          {/* Left: bold statement */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-            className="lg:w-1/2"
-          >
+          <m.div {...fromStart} transition={{ duration: 0.7 }} className="lg:w-1/2">
             <p className="font-sans text-[10px] uppercase tracking-[0.45em] text-accent mb-6">
-              {lang === 'fr' ? 'Fabricant exclusif' : lang === 'ar' ? 'الشركة المصنّعة الحصرية' : 'Exclusive Manufacturer'}
+              {t('home.manufacturer.eyebrow')}
             </p>
-            <h2
-              className="font-display font-light text-white leading-[1.05] mb-8"
-              style={{ fontSize: 'clamp(36px, 5.5vw, 80px)' }}
-            >
-              {lang === 'fr'
-                ? <>Nous concevons.<br />Nous fabriquons.<br />Nous vendons.</>
-                : lang === 'ar'
-                  ? <>نصمم.<br />نصنع.<br />نبيع.</>
-                  : <>We design.<br />We manufacture.<br />We sell.</>}
+            <h2 className="font-display font-light text-white leading-[1.05] mb-8 text-[clamp(36px,5.5vw,80px)]">
+              {manufacturerLines.map((line) => (
+                <span key={line} className="block">
+                  {line}
+                </span>
+              ))}
             </h2>
             <div className="w-12 h-px bg-accent mb-8" />
             <p className="font-sans text-white/50 text-sm leading-relaxed tracking-wide max-w-md">
-              {lang === 'fr'
-                ? 'ARCADA est le premier et unique fabricant algérien de ces produits. Chaque modèle, chaque couleur, chaque finition est conçu et produit exclusivement par nos équipes. Ces carreaux n\'existent nulle part ailleurs.'
-                : lang === 'ar'
-                  ? 'ARCADA هي أول وحيد شركة جزائرية تصنّع هذه المنتجات. كل نموذج، كل لون، كل تشطيب مصمَّم ومنتَج حصريًا من قِبَل فِرَقنا. هذه البلاطات لا توجد في أي مكان آخر.'
-                  : 'ARCADA is the first and only Algerian manufacturer of these products. Every model, every color, every finish is designed and produced exclusively by our teams. These tiles exist nowhere else.'}
+              {t('home.manufacturer.body')}
             </p>
-          </motion.div>
+          </m.div>
 
-          {/* Right: three pillars */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
+          <m.ul
+            {...fromEnd}
             transition={{ duration: 0.7, delay: 0.1 }}
-            className="lg:w-1/2 grid grid-cols-1 gap-px bg-white/10 border border-white/10 rounded-2xl overflow-hidden"
+            className="lg:w-1/2 w-full grid grid-cols-1 gap-px bg-white/10 border border-white/10 rounded-2xl overflow-hidden"
           >
-            {[
-              {
-                icon: '◈',
-                title: lang === 'fr' ? 'Conception' : lang === 'ar' ? 'التصميم' : 'Design',
-                body: lang === 'fr'
-                  ? 'Chaque forme, motif et couleur naît dans nos ateliers.'
-                  : lang === 'ar'
-                    ? 'كل شكل ونقش ولون يولد في ورشاتنا.'
-                    : 'Every shape, pattern and colour is born in our studios.',
-              },
-              {
-                icon: '◉',
-                title: lang === 'fr' ? 'Fabrication' : lang === 'ar' ? 'التصنيع' : 'Manufacture',
-                body: lang === 'fr'
-                  ? 'Produit entièrement en Algérie, avec une maîtrise artisanale totale.'
-                  : lang === 'ar'
-                    ? 'مصنوع بالكامل في الجزائر بإتقان حرفي كامل.'
-                    : 'Made entirely in Algeria with complete artisanal mastery.',
-              },
-              {
-                icon: '◎',
-                title: lang === 'fr' ? 'Distribution directe' : lang === 'ar' ? 'البيع المباشر' : 'Direct Sales',
-                body: lang === 'fr'
-                  ? 'Vendu directement par ARCADA — aucun intermédiaire.'
-                  : lang === 'ar'
-                    ? 'يُباع مباشرةً بواسطة ARCADA — لا وسيط.'
-                    : 'Sold directly by ARCADA — no intermediary.',
-              },
-            ].map(({ icon, title, body }) => (
-              <div key={title} className="bg-dark px-8 py-7 flex items-start gap-5">
-                <span className="text-accent text-xl mt-0.5 flex-shrink-0">{icon}</span>
+            {pillars.map(({ title, body }, i) => (
+              <li key={title} className="bg-dark px-8 py-7 flex items-start gap-5">
+                <span aria-hidden="true" className="text-accent text-xl mt-0.5 flex-shrink-0">
+                  {PILLAR_ICONS[i]}
+                </span>
                 <div>
-                  <p className="font-sans text-white text-xs uppercase tracking-[0.25em] mb-2">{title}</p>
+                  <h3 className="font-sans font-normal text-white text-xs uppercase tracking-[0.25em] mb-2">{title}</h3>
                   <p className="font-sans text-white/40 text-sm leading-relaxed">{body}</p>
                 </div>
-              </div>
+              </li>
             ))}
-          </motion.div>
+          </m.ul>
         </div>
       </section>
 
-      {/* ─── COLLECTIONS GRID ───────────────────────────────────────── */}
+      {/* ─── COLLECTIONS ────────────────────────────────────────────── */}
       <section className="py-20 md:py-28">
-        <div className="px-6 lg:px-16 max-w-screen-2xl mx-auto mb-12">
-          <div className="flex items-end justify-between">
-            <div>
-              <p className="font-sans text-[10px] uppercase tracking-[0.35em] text-accent mb-3">
-                {t('nav.collections')}
-              </p>
-              <h2
-                className="font-display font-light text-dark"
-                style={{ fontSize: 'clamp(28px, 4vw, 52px)' }}
-              >
-                {lang === 'fr' ? '12 Collections' : lang === 'ar' ? '12 مجموعات' : '12 Collections'}
-              </h2>
-            </div>
-            <Link
-              to="/catalogue"
-              className="hidden sm:inline-flex items-center gap-3 font-sans text-[10px] uppercase tracking-[0.25em] text-muted hover:text-accent transition-colors group"
-            >
-              {t('common.viewAll')}
-              <span className="w-6 h-px bg-current group-hover:w-10 transition-all duration-300" />
-            </Link>
+        <div className="px-6 lg:px-16 max-w-screen-2xl mx-auto mb-12 flex items-end justify-between">
+          <div>
+            <p className={eyebrowCls}>{t('nav.collections')}</p>
+            <h2 className={`${sectionTitleCls} text-dark`}>
+              {t('home.collectionsCount', { count: CATEGORIES.length })}
+            </h2>
           </div>
+          <Link
+            to="/catalogue"
+            className="hidden sm:inline-flex items-center gap-3 font-sans text-[10px] uppercase tracking-[0.25em] text-muted hover:text-accent transition-colors group"
+          >
+            {t('common.viewAll')}
+            <span className="w-6 h-px bg-current group-hover:w-10 transition-all duration-300" />
+          </Link>
         </div>
 
         <div className="px-6 lg:px-16 overflow-x-auto">
-          <div className="flex gap-6 pb-4" style={{ minWidth: 'max-content' }}>
+          <ul className="flex gap-6 pb-4 min-w-max">
             {CATEGORIES.map((cat) => (
-              <Link
-                key={cat.slug}
-                to={`/catalogue/${cat.slug}`}
-                className="group relative overflow-hidden rounded-2xl w-80 flex-shrink-0 bg-surface-warm block"
-                style={{ aspectRatio: '3/4' }}
-              >
-                <img
-                  src={cat.image}
-                  alt={`Collection ${cat.name[lang]} — carreaux céramiques ${cat.shape} par ARCADA`}
-                  width={800}
-                  height={1000}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
-                  loading="lazy"
-                  decoding="async"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-dark/70 via-dark/20 to-transparent" />
+              <li key={cat.slug}>
+                <Link
+                  to={`/catalogue/${cat.slug}`}
+                  className="group relative block overflow-hidden rounded-2xl w-72 sm:w-80 aspect-[3/4] bg-surface-warm"
+                >
+                  <img
+                    src={cat.image}
+                    alt={`Collection ${cat.name[lang]} — carreaux céramiques ${cat.shape} par ARCADA`}
+                    width={800}
+                    height={1000}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-dark/70 via-dark/20 to-transparent" />
 
-                {/* Default state */}
-                <div className="absolute inset-0 flex flex-col justify-end p-6 transition-opacity duration-300 group-hover:opacity-0">
-                  <p className="font-sans text-white/60 text-[10px] uppercase tracking-[0.3em] mb-2">
-                    {cat.shape}
-                  </p>
-                  <h3 className="font-display font-light text-white text-2xl leading-tight">
-                    {cat.name[lang]}
-                  </h3>
-                </div>
+                  <div className="absolute inset-0 flex flex-col justify-end p-6 transition-opacity duration-300 group-hover:opacity-0">
+                    <p className="font-sans text-white/60 text-[10px] uppercase tracking-[0.3em] mb-2">{cat.shape}</p>
+                    <h3 className="font-display font-light text-white text-2xl leading-tight">{cat.name[lang]}</h3>
+                  </div>
 
-                {/* Hover state */}
-                <div className="absolute inset-0 flex flex-col justify-end p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-dark/60">
-                  <p className="font-sans text-white/60 text-[10px] uppercase tracking-[0.3em] mb-2">
-                    {cat.shape}
-                  </p>
-                  <h3 className="font-display font-light text-white text-2xl leading-tight mb-3">
-                    {cat.name[lang]}
-                  </h3>
-                  <p className="font-sans text-white/70 text-xs leading-relaxed mb-4">
-                    {cat.description[lang]}
-                  </p>
-                  <span className="inline-flex items-center gap-2 font-sans text-white text-[10px] uppercase tracking-[0.25em]">
-                    Voir →
-                  </span>
-                </div>
-              </Link>
+                  {/* Hover detail — visual only; the heading above already names the link. */}
+                  <div
+                    aria-hidden="true"
+                    className="absolute inset-0 flex flex-col justify-end p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-dark/60"
+                  >
+                    <p className="font-sans text-white/60 text-[10px] uppercase tracking-[0.3em] mb-2">{cat.shape}</p>
+                    <p className="font-display font-light text-white text-2xl leading-tight mb-3">{cat.name[lang]}</p>
+                    <p className="font-sans text-white/70 text-xs leading-relaxed mb-4">{cat.description[lang]}</p>
+                    <span className="font-sans text-white text-[10px] uppercase tracking-[0.25em]">
+                      {t('home.view')} <span className="inline-block rtl:rotate-180">→</span>
+                    </span>
+                  </div>
+                </Link>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
       </section>
 
       {/* ─── FEATURED PRODUCTS ──────────────────────────────────────── */}
       <section className="py-20 md:py-28 bg-dark">
-        <div className="px-6 lg:px-16 max-w-screen-2xl mx-auto">
-          <div className="flex items-end justify-between mb-12">
-            <div>
-              <p className="font-sans text-[10px] uppercase tracking-[0.35em] text-accent mb-3">
-                {lang === 'fr' ? 'Sélection' : lang === 'ar' ? 'اختيار' : 'Selection'}
-              </p>
-              <h2
-                className="font-display font-light text-white"
-                style={{ fontSize: 'clamp(28px, 4vw, 52px)' }}
-              >
-                {lang === 'fr' ? 'Produits phares' : lang === 'ar' ? 'المنتجات المميزة' : 'Featured Products'}
-              </h2>
-            </div>
-          </div>
+        <div className="px-6 lg:px-16 max-w-screen-2xl mx-auto mb-12">
+          <p className={eyebrowCls}>{t('home.featuredEyebrow')}</p>
+          <h2 className={`${sectionTitleCls} text-white`}>{t('home.featuredTitle')}</h2>
         </div>
 
         <div className="px-6 lg:px-16 overflow-x-auto">
-          <div className="flex gap-6 pb-4" style={{ minWidth: 'max-content' }}>
-            {featured.slice(0, 8).map((fv) => {
-              const cat = CATEGORIES.find((c) => c.slug === fv.categorySlug);
-              const href = `/catalogue/${fv.categorySlug}/${fv.productSlug}?variant=${fv.variantId}`;
-
-              return (
-                <motion.div
-                  key={fv.variantId}
-                  initial={{ opacity: 0, x: 20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5 }}
-                  className="w-72 flex-shrink-0 group"
-                >
-                  <Link to={href} className="block">
-                    <div className="aspect-[3/4] bg-surface overflow-hidden relative rounded-2xl">
-                      <img
-                        src={fv.image}
-                        alt={`${fv.productName[lang]} ${fv.name[lang]} — carreau céramique ARCADA`}
-                        width={800}
-                        height={800}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
-                        loading="lazy"
-                        decoding="async"
-                      />
-                    </div>
-                    <div className="pt-4">
-                      <p className="font-sans text-[10px] uppercase tracking-[0.2em] text-accent mb-1">
-                        {cat?.name[lang]}
-                      </p>
-                      <h3 className="font-display font-light text-white text-xl mb-1">
-                        {fv.productName[lang]}
-                      </h3>
-                      <p className="font-sans text-white/50 text-xs tracking-wide">
-                        {fv.name[lang]}
-                      </p>
-                    </div>
-                  </Link>
-                </motion.div>
-              );
-            })}
-          </div>
+          <ul className="flex gap-6 pb-4 min-w-max">
+            {FEATURED.map((fv) => (
+              <m.li
+                key={fv.variantId}
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5 }}
+                className="w-64 sm:w-72 group"
+              >
+                <Link to={variantHref(fv)} className="block">
+                  <div className="aspect-[3/4] bg-surface overflow-hidden rounded-2xl">
+                    <img
+                      src={fv.image}
+                      alt={`${fv.productName[lang]} ${fv.name[lang]} — carreau céramique ARCADA`}
+                      width={800}
+                      height={800}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                  <div className="pt-4">
+                    <p className="font-sans text-[10px] uppercase tracking-[0.2em] text-accent mb-1">
+                      {getCategory(fv.categorySlug)?.name[lang]}
+                    </p>
+                    <h3 className="font-display font-light text-white text-xl mb-1">{fv.productName[lang]}</h3>
+                    <p className="font-sans text-white/50 text-xs tracking-wide">{fv.name[lang]}</p>
+                  </div>
+                </Link>
+              </m.li>
+            ))}
+          </ul>
         </div>
       </section>
 
-      {/* ─── ABOUT ARCADA ────────────────────────────────────────── */}
-      <section className="py-20 md:py-32 px-6 lg:px-16 bg-[#FAF8F5]">
+      {/* ─── ABOUT ──────────────────────────────────────────────────── */}
+      <section className="py-20 md:py-32 px-6 lg:px-16 bg-bg">
         <div className="max-w-screen-2xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
-          {/* Image */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
+          <m.div
+            {...fromStart}
             transition={{ duration: 0.7 }}
             className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-surface-warm"
           >
@@ -391,69 +323,29 @@ export default function Home() {
               loading="lazy"
               decoding="async"
             />
-          </motion.div>
+          </m.div>
 
-          {/* Text */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.1 }}
-          >
+          <m.div {...fromEnd} transition={{ duration: 0.7, delay: 0.1 }}>
             <p className="font-sans text-[10px] uppercase tracking-[0.4em] text-accent mb-5">
-              {lang === 'fr' ? 'À propos' : lang === 'ar' ? 'من نحن' : 'About'}
+              {t('home.aboutEyebrow')}
             </p>
-            <h2
-              className="font-display font-light text-dark mb-8 leading-tight"
-              style={{ fontSize: 'clamp(28px, 4vw, 52px)' }}
-            >
-              {lang === 'fr' ? "Présentation d'Arcada" : lang === 'ar' ? 'تعريف بأركادا' : 'About Arcada'}
-            </h2>
+            <h2 className={`${sectionTitleCls} text-dark mb-8 leading-tight`}>{t('home.aboutTitle')}</h2>
             <div className="space-y-5 font-sans text-sm text-muted leading-relaxed tracking-wide">
-              {lang === 'fr' ? (
-                <>
-                  <p>Employé depuis l&apos;Antiquité à des fins décoratives, le carreau céramique a toujours été l&apos;élément artistique essentiel pour décorer les résidences de la classe aisée et les bâtiments les plus somptueux. Aujourd&apos;hui, l&apos;industrie a fait du carrelage un produit lisse et monotone limité à quatre imitations : marbre, bois, pierre et ciment.</p>
-                  <p>Arcada est venue rendre au carreau céramique sa place artistique dans le monde de la décoration, donnant ainsi à ses clients la possibilité de créer des espaces uniques répondant aux besoins des plus exigeants ! Cet objectif est atteint grâce à l&apos;incorporation de formes géométriques qui s&apos;affichent en relief, avec de multiples applications, coloris, effets décoratifs spéciaux et nuances, l&apos;application de matière première de haute qualité et l&apos;utilisation d&apos;équipements de dernière technologie.</p>
-                  <p>Nos collections s&apos;intègrent parfaitement dans les éléments d&apos;architecture ou éléments de décoration d&apos;intérieur, sont durables, inaltérables et ne nécessitent aucun entretien.</p>
-                  <p>Nous vous invitons à visiter notre showroom à Sebala (Draria) pour voir de près nos collections. Nous vous assurons un service excellent et une qualité irréprochable.</p>
-                </>
-              ) : lang === 'ar' ? (
-                <>
-                  <p>استُخدم البلاط السيراميكي منذ العصور القديمة لأغراض زخرفية، وكان دائمًا العنصر الفني الأساسي لزينة منازل الطبقة الراقية وأفخر المباني. أما اليوم، فقد حوّلت الصناعة البلاط إلى منتج ناعم ورتيب لا يتجاوز أربعة تقليدات: الرخام والخشب والحجر والإسمنت.</p>
-                  <p>جاءت أركادا لتُعيد للبلاط السيراميكي مكانته الفنية في عالم الديكور، مانحةً عملاءها إمكانية إنشاء فضاءات فريدة تلبّي أعلى المتطلبات. يتحقق هذا الهدف من خلال دمج الأشكال الهندسية التي تبرز في نقوش بارزة، مع تعدد التطبيقات والألوان والتأثيرات الزخرفية والدرجات اللونية، واستخدام مواد أولية عالية الجودة ومعدات بأحدث التقنيات.</p>
-                  <p>تتناسق مجموعاتنا بشكل مثالي مع عناصر العمارة وعناصر الديكور الداخلي، وهي متينة وغير قابلة للتغيير ولا تحتاج إلى أي صيانة.</p>
-                  <p>ندعوكم لزيارة صالة العرض في سبالة (دراريا) للاطلاع عن قرب على مجموعاتنا. نضمن لكم خدمة ممتازة وجودة لا تشوبها شائبة.</p>
-                </>
-              ) : (
-                <>
-                  <p>Used since Antiquity for decorative purposes, ceramic tile has always been the essential artistic element for adorning the residences of the upper class and the most sumptuous buildings. Today, the industry has reduced tiling to a smooth and monotonous product limited to four imitations: marble, wood, stone and cement.</p>
-                  <p>Arcada has come to restore ceramic tile to its rightful artistic place in the world of decoration, giving its clients the possibility of creating unique spaces that meet the most demanding requirements. This is achieved through the incorporation of geometric shapes displayed in relief, with multiple applications, colors, special decorative effects and shades, the use of high-quality raw materials and state-of-the-art equipment.</p>
-                  <p>Our collections integrate perfectly into architectural elements and interior decoration, are durable, unalterable and require no maintenance.</p>
-                  <p>We invite you to visit our showroom in Sebala (Draria) to discover our collections up close. We guarantee excellent service and irreproachable quality.</p>
-                </>
-              )}
+              {aboutParagraphs.map((paragraph) => (
+                <p key={paragraph.slice(0, 32)}>{paragraph}</p>
+              ))}
             </div>
-          </motion.div>
+          </m.div>
         </div>
       </section>
 
       {/* ─── VISUALIZER CTA ─────────────────────────────────────────── */}
-      <section className="py-20 md:py-32 px-6 lg:px-16 bg-[#1A1714]">
+      <section className="py-20 md:py-32 px-6 lg:px-16 bg-dark">
         <div className="max-w-screen-2xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-          >
-            <p className="font-sans text-[10px] uppercase tracking-[0.4em] text-accent mb-5">
-              {t('visualizer.title')}
-            </p>
-            <h2
-              className="font-display font-light text-white mb-6 leading-tight"
-              style={{ fontSize: 'clamp(32px, 5vw, 64px)' }}
-            >
-              {lang === 'fr' ? 'Créez votre espace' : lang === 'ar' ? 'صمم مساحتك' : 'Design your space'}
+          <m.div {...fromStart} transition={{ duration: 0.7 }}>
+            <p className="font-sans text-[10px] uppercase tracking-[0.4em] text-accent mb-5">{t('visualizer.title')}</p>
+            <h2 className="font-display font-light text-white mb-6 leading-tight text-[clamp(32px,5vw,64px)]">
+              {t('home.visualizerTitle')}
             </h2>
             <p className="font-sans text-white/50 text-sm leading-relaxed tracking-wide mb-10 max-w-md">
               {t('visualizer.subtitle')}
@@ -462,14 +354,12 @@ export default function Home() {
               to="/preview"
               className="inline-block px-8 py-4 rounded-2xl border border-white/30 text-white font-sans text-xs uppercase tracking-[0.25em] hover:bg-white hover:text-dark transition-all duration-300"
             >
-              {lang === 'fr' ? 'Lancer le Visualiseur' : lang === 'ar' ? 'فتح العارض' : 'Open the Visualizer'}
+              {t('hero.ctaVisualizer')}
             </Link>
-          </motion.div>
+          </m.div>
 
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
+          <m.div
+            {...fromEnd}
             transition={{ duration: 0.7, delay: 0.1 }}
             className="relative aspect-square overflow-hidden rounded-2xl hidden lg:block"
           >
@@ -483,71 +373,47 @@ export default function Home() {
               decoding="async"
             />
             <div className="absolute inset-0 bg-gradient-to-br from-dark/60 to-transparent" />
-          </motion.div>
+          </m.div>
         </div>
       </section>
 
-      {/* ─── MANIFESTO QUOTE ────────────────────────────────────────── */}
-      <section className="relative py-24 md:py-36 overflow-hidden bg-[#FAF8F5]">
-        {/* Decorative large background letter */}
+      {/* ─── MANIFESTO ──────────────────────────────────────────────── */}
+      <section className="relative py-24 md:py-36 overflow-hidden bg-bg">
         <span
           aria-hidden="true"
-          className="pointer-events-none select-none absolute inset-0 flex items-center justify-center font-display font-light text-[#E8E2D9] leading-none"
-          style={{ fontSize: 'clamp(160px, 28vw, 380px)' }}
+          className="pointer-events-none select-none absolute inset-0 flex items-center justify-center font-display font-light text-border leading-none text-[clamp(160px,28vw,380px)]"
         >
           A
         </span>
 
-        <motion.div
+        <m.figure
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.9, ease: 'easeOut' }}
           className="relative max-w-screen-xl mx-auto px-6 lg:px-16 text-center"
         >
-          {/* Opening mark */}
           <p
             aria-hidden="true"
-            className="font-display text-accent/40 leading-none mb-2 select-none"
-            style={{ fontSize: 'clamp(60px, 8vw, 120px)' }}
+            className="font-display text-accent/40 leading-none mb-2 select-none text-[clamp(60px,8vw,120px)]"
           >
-            "
+            &ldquo;
           </p>
-
-          <blockquote
-            className="font-display font-light text-dark leading-[1.15]"
-            style={{ fontSize: 'clamp(28px, 4.5vw, 68px)' }}
-          >
-            {lang === 'fr' ? (
-              <>
-                Qualité,{' '}
-                <em className="not-italic text-accent">durabilité</em>,{' '}
-                design<br className="hidden md:block" /> et innovation
-              </>
-            ) : lang === 'ar' ? (
-              <>
-                جودة،{' '}
-                <em className="not-italic text-accent">استدامة</em>،{' '}
-                تصميم وابتكار
-              </>
-            ) : (
-              <>
-                Quality,{' '}
-                <em className="not-italic text-accent">sustainability</em>,{' '}
-                design<br className="hidden md:block" /> and innovation
-              </>
-            )}
+          <blockquote className="font-display font-light text-dark leading-[1.15] text-[clamp(28px,4.5vw,68px)]">
+            <Trans
+              i18nKey="home.manifesto"
+              components={{
+                accent: <em className="not-italic text-accent" />,
+                br: <br className="hidden md:block" />,
+              }}
+            />
           </blockquote>
-
-          {/* Closing mark + divider */}
-          <div className="mt-10 flex items-center justify-center gap-6">
-            <span className="flex-1 max-w-[120px] h-px bg-[#E8E2D9]" />
-            <p className="font-sans text-[10px] uppercase tracking-[0.45em] text-muted">
-              ARCADA
-            </p>
-            <span className="flex-1 max-w-[120px] h-px bg-[#E8E2D9]" />
-          </div>
-        </motion.div>
+          <figcaption className="mt-10 flex items-center justify-center gap-6">
+            <span className="flex-1 max-w-[120px] h-px bg-border" />
+            <span className="font-sans text-[10px] uppercase tracking-[0.45em] text-muted">ARCADA</span>
+            <span className="flex-1 max-w-[120px] h-px bg-border" />
+          </figcaption>
+        </m.figure>
       </section>
     </>
   );

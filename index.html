@@ -7,8 +7,8 @@
     <!--
       Tags carrying data-rh="true" are the defaults served to crawlers that do
       not execute JS (Facebook, WhatsApp, X). react-helmet-async claims tags
-      with that attribute and REPLACES them per route once the app mounts —
-      without it every one of these would be duplicated on every page.
+      with that attribute and replaces them per route once the app mounts
+      (src/components/seo/SEOHead.tsx) — without it they would be duplicated.
     -->
 
     <!-- Primary SEO -->
@@ -16,8 +16,7 @@
     <meta data-rh="true" name="description" content="ARCADA, premier et unique fabricant algérien de carreaux céramiques de prestige. 12 collections exclusives — Silos, Atelier, Ducal, Leaf, Chic, Casbah et plus. Conception, fabrication et vente directe. Showroom à Sebala, Draria, Alger." />
     <meta name="keywords" content="carreaux ceramique algerie, arcada ceramique, carrelage algerie, fabricant ceramique algerie, carreaux picket, carreaux zellige, brique ceramique, surface ceramique, tuile murale algerie, carreaux artisanaux, showroom carrelage alger, carrelage draria" />
     <meta data-rh="true" name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-    <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-    <meta data-rh="true" name="author" content="ARCADA" />
+    <meta name="author" content="ARCADA" />
     <meta name="theme-color" content="#1A1714" />
     <meta name="format-detection" content="telephone=no" />
     <link data-rh="true" rel="canonical" href="https://www.arcadatile.com/" />
@@ -57,32 +56,28 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
 
-    <!-- Resource hints + critical asset preloads -->
+    <!--
+      Resource hints. The home hero (/image1.webp) is preloaded with an HTTP
+      Link header on "/" only (vercel.json), so other landing pages don't pay for it.
+    -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preload" as="image" href="/image1.webp" fetchpriority="high" />
     <link rel="preload" as="image" href="/logo.webp" />
 
     <!--
-      Fonts load without blocking the first paint: the sheet is fetched at low
-      priority as `print`, then promoted to `all` once it arrives. display=swap
-      keeps text visible with the fallback face in the meantime.
+      Fonts never block first paint: the stylesheet is preloaded here and
+      attached by src/main.tsx (no inline handler, so the CSP needs no
+      'unsafe-inline' for scripts). display=swap keeps text visible meanwhile.
     -->
     <link
       rel="preload"
       as="style"
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap"
-      media="print"
-      onload="this.media='all'"
+      href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500;600&family=Tajawal:wght@300;400;500&display=swap"
     />
     <noscript>
       <link
         rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500;600&family=Tajawal:wght@300;400;500&display=swap"
       />
     </noscript>
 
@@ -155,6 +150,11 @@
   </head>
   <body>
     <div id="root"></div>
+    <noscript>
+      <p class="p-8 text-center font-display text-lg">
+        ARCADA — carreaux céramiques. Activez JavaScript pour parcourir le catalogue, ou appelez le +213 550 24 24 54.
+      </p>
+    </noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

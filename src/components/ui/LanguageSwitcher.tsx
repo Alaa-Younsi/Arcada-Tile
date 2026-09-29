@@ -1,38 +1,38 @@
 import { useTranslation } from 'react-i18next';
+import { useLang } from '@/hooks/useLang';
+import type { Lang } from '@/types';
 
-const LANGS = [
-  { code: 'en', label: 'EN' },
-  { code: 'fr', label: 'FR' },
-  { code: 'ar', label: 'ع' },
+// The 'ع' glyph uses the system font so a French/English page doesn't
+// download the Arabic webfont just to draw one letter.
+const OPTIONS: ReadonlyArray<{ code: Lang; label: string; name: string; fontCls: string }> = [
+  { code: 'en', label: 'EN', name: 'English', fontCls: 'font-sans' },
+  { code: 'fr', label: 'FR', name: 'Français', fontCls: 'font-sans' },
+  { code: 'ar', label: 'ع', name: 'العربية', fontCls: 'font-[family-name:system-ui]' },
 ];
 
 export function LanguageSwitcher() {
-  const { i18n } = useTranslation();
-  const current = i18n.language;
+  const { t, i18n } = useTranslation();
+  const current = useLang();
 
-  const handleChange = (code: string) => {
-    i18n.changeLanguage(code);
-    localStorage.setItem('arcada_lang', code);
-    document.documentElement.dir = code === 'ar' ? 'rtl' : 'ltr';
-    document.documentElement.lang = code;
-  };
-
+  // Persistence and <html lang/dir> are handled by the i18n setup.
   return (
-    <div className="flex items-center gap-1">
-      {LANGS.map((lang) => (
+    <fieldset className="flex items-center gap-1">
+      <legend className="sr-only">{t('nav.language')}</legend>
+      {OPTIONS.map((opt) => (
         <button
-          key={lang.code}
-          onClick={() => handleChange(lang.code)}
-          className={`px-2 py-1 font-sans text-[11px] uppercase tracking-[0.2em] transition-colors ${
-            current === lang.code
-              ? 'text-[#8B7355] border-b border-[#8B7355]'
-              : 'text-[#6B6459] hover:text-[#1A1714]'
+          key={opt.code}
+          type="button"
+          lang={opt.code}
+          onClick={() => void i18n.changeLanguage(opt.code)}
+          aria-label={opt.name}
+          aria-pressed={current === opt.code}
+          className={`px-2 py-1 ${opt.fontCls} text-[11px] uppercase tracking-[0.2em] transition-colors ${
+            current === opt.code ? 'text-accent border-b border-accent' : 'text-muted hover:text-dark'
           }`}
-          aria-label={`Switch to ${lang.label}`}
         >
-          {lang.label}
+          {opt.label}
         </button>
       ))}
-    </div>
+    </fieldset>
   );
 }
